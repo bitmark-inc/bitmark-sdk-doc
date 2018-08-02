@@ -49,6 +49,18 @@ Config     | Options       | Description
 Type      | _string_      | `issue` or `transfer`
 HalfSignedRecords   | _object_ | Object of half signed record
 
+
+### Bitmark Status
+
+The following table lists all status for a bitmark.
+
+STATUS     | Explaination
+-----------|------------
+PROCESSING | There is a transaction need to
+WAITING    | The bitmark is waiting for acceptance from other accounts
+PENDING    | The asset or the bitmark status of this bitmark is still not ready
+READY      | A bitmark is ready for performing anything action
+
 ## Transaction
 
 ```go
@@ -79,3 +91,15 @@ Config     | Options       | Description
 --------- | -----------   | -----------
 Type      | _string_      | `issue` or `transfer`
 HalfSignedRecords   | _object_ | Object of half signed record
+
+### Transaction Status
+
+The following table lists all status for a transaction.
+
+STATUS    | Explaination
+--------- | -----------
+WAITING   | A transaction is waiting for acceptance from the receiptant accounts
+REJECTED  | A transaction is rejected
+CANCELLED | A transaction is cancelled
+PENDING   | A transaction is submitted to the blockchain waiting for confirmation
+CONFIRMED | A transacton is confirmed from the blockchain

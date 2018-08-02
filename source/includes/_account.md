@@ -26,9 +26,9 @@ To make a user be able backup and recover his accounts eailsy, this SDK offers t
 
 ```go
 // Back up the seed
-account := account.Seed()
+seed := account.Seed()
 // Recover from a seed
-account := sdk.AccountFromSeed()
+account := sdk.AccountFromSeed(seed)
 ```
 
 ```javascript
