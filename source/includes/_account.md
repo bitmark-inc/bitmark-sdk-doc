@@ -26,16 +26,16 @@ To make a user be able backup and recover his accounts eailsy, this SDK offers t
 
 ```go
 // Back up the seed
-account := sdk.Seed()
+account := account.Seed()
 // Recover from a seed
 account := sdk.AccountFromSeed()
 ```
 
 ```javascript
 // Back up the seed
-var account = sdk.seed()
+var seed = account.seed()
 // Recover from a seed
-var account = sdk.accountFromSeed()
+var account = sdk.accountFromSeed(seed)
 ```
 
 Back up an account from its seed is a straight forward way. It outputs bytes of an account seed. You can save it in your storage, such as, a database. And use it to recover an account for a later on operation.
@@ -43,11 +43,17 @@ Back up an account from its seed is a straight forward way. It outputs bytes of 
 ### Mnemonic recovery phrase
 
 ```go
-account := sdk.AccountFromRecoveryPhrase()
+// Back up a phrase
+phrase := account.RecoveryPhrase()
+// Recover from a phrase
+account := sdk.AccountFromRecoveryPhrase(phrase)
 ```
 
 ```javascript
-var account = sdk.accountFromRecoveryPhrase()
+// Back up a phrase
+var phrase = account.recoveryPhrase()
+// Recover from a phrase
+var account = sdk.accountFromRecoveryPhrase(phrase)
 ```
 
 The concept of this recovery phrase comes from [BIP39 - Mnemonic code for generating deterministic keys](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki). With these phrase, people can easily written down the human readable words instead of random strings which is difficult to understand.
@@ -58,14 +64,20 @@ In this SDK, we turn an account seed into 24 word for backing up.
 
 
 ```go
-account := sdk.AccountFromShamirSecretSharing()
+// Back up share keys
+shareKeys := account.ShamirSecretKeys()
+// Recover from share keys
+account := sdk.AccountFromShareKeys(shareKeys)
 ```
 
 ```javascript
-var account = sdk.accountFromShamirSecretSharing()
+// Back up share keys
+var shareKeys = account.ShamirSecretKeys()
+// Recover from share keys
+var account = sdk.AccountFromShareKeys(shareKeys)
 ```
 
-Shamir's Secret Sharing is a concept to
+Shamir's Secret Sharing is a form of secret sharing, where a secret is divided into parts, giving each participant its own unique part, where some of the parts or all of them are needed in order to reconstruct the secret.
 
 ## AccountNumber
 

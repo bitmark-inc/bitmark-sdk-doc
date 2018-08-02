@@ -24,6 +24,22 @@ accessibility   | `public`, `private` | The accessibility of the asset
 An asset record will not be confirmed without an confirmed issue point to it. Unconfirmed asset records will be expired three days after they register into the blockchain.
 </aside>
 
+## Upload an asset
+
+After you register an asset to the blockchain, you will receive an upload url for uploading your file. If it is a public asset, you need to make sure the fingerprint of the file match the record you just registered. For private asset, we will bypass the fingerprint check
+
+```go
+asset.Upload(fileBytes)
+```
+
+## Download an asset
+
+You can use this function to download an asset file if the asset record has already confirmed in the blockchain.
+
+```go
+asset.Download()
+```
+
 # Issue
 
 ```go
@@ -57,10 +73,10 @@ type IssueQuantityOptions struct {
     Nonces []int
 ```
 
-Config    | Options   | Description
---------- | ----------- | -----------
+Config      | Options   | Description
+---------  | ----------- | -----------
 quantity   | _integer_  | numbers of bitmark to issue
-nonces   | _array of integer_ | issue bitmark with specific nonces
+nonces     | _array of integer_ | issue bitmark with specific nonces
 
 ## Batch Issues
 
@@ -93,6 +109,14 @@ There are two ways to transfer bitmark:
 
 What makes two-signature transfer different from one-signature transfer is that a transfer requires an acceptance from a receiptant.
 
+**Transfer parameter**
+
+Config    | Options   | Description
+--------- | ----------- | -----------
+bitmark   | _bitmark_  | an asset that this issue references to
+receiver   | _account_ | next owner of a bitmark
+countersigned   | `true`, `false` | represnet whether this is a 1-signature or 2-signature
+
 ## Submit one-signature transfer
 
 ```go
@@ -103,13 +127,6 @@ client.TransferBitmark(transferRequest)
 
 A user can submit a bitmark to another without any permission.
 
-### Transfer parameter
-
-Config    | Options   | Description
---------- | ----------- | -----------
-bitmark   | _bitmark_  | an asset that this issue references to
-receiver   | _account_ | next owner of a bitmark
-countersigned   | `true`, `false` | represnet whether this is a 1-signature or 2-signature
 
 ## Submit two-signature transfer
 
@@ -119,13 +136,13 @@ transferRequest.Sign(account)
 tx := client.TransferBitmark(transferRequest)
 ```
 
-A user first submits a transfer.
+For some scenario, the developer want to get a permission from the receiver before we transfer a property to it. In the case, you will submit a two-signature transfer.
 
 <aside class="notice">
 You are not able to transfer a bitmark in the platform if there is an ongoing transfer for the bitmark.
 </aside>
 
-## Cancel a two-signature transfer
+### Cancel a two-signature transfer
 
 ```go
 transferRequest := tx.Cancel(accountB)
@@ -134,25 +151,29 @@ tx := client.TransferBitmark(transferRequest)
 
 The return of `TransferBitmark` is a transaction object. A transaction can be cancelled if something goes wrong.
 
-### Cancel it later on
+## Take action to bitmarks
 
 ```go
 q := sdk.NewQueryOption(BITMARK, QueryOptions)
 q.Sign(Account)
 bitmarks := sdk.Query(q) // []Bitmark
-transferRequest := bitmarks[0].CancelTransfer()
+```
+
+A bitmark object will include its latest transaction which means you can take action to it if it is in a `WAITING` status. Everyone can query its bitmark status.
+
+
+### Cancel a transfer you submitted
+
+```go
+transferRequest := bitmarks.CancelTransfer()
 tx := client.TransferBitmark(transferRequest)
 ```
 
-A user can also query his previous transfers and cancel them later on.
+A sender can cancel his pre-created transfers if it is not accpeted or rejected by the reciver.
 
-## Query incoming two-signature tranfers and take action
+### Take action to incoming two-signature tranfers
 
 ```go
-q := sdk.NewQueryOption(BITMARK, QueryOptions)
-q.Sign(Account)
-bitmarks := sdk.Query(q) // []Bitmark
-
 transferRequest := bitmarks[0].AcceptTransfer()
 tx := client.TransferBitmark(transferRequest)
 
@@ -162,4 +183,4 @@ transferRequest := bitmarks[0].RejectTransfer(accountB)
 tx := client.TransferBitmark(transferRequest)
 ```
 
-A user can query his incoming transfers and take action on them. Each transfer can be either `accept` or `reject`.
+A receiver can query his incoming transfers and take action on them. Each transfer can be either `accept` or `reject`.

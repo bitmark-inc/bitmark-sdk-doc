@@ -5,6 +5,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - go
   - javascript
   - swift
+  - java
 
 toc_footers:
   - <a href='https://bitmark.com'>Website</a>
