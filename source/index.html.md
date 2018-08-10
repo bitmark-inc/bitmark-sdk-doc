@@ -2,7 +2,8 @@
 title: Bitmark SDK Documentation
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - go
+  - go--v1: go-v1
+  - go--v2: go-v2
   - javascript
   - swift
   - java
@@ -34,9 +35,15 @@ Bitmark makes simple tools that empower anyone to assert ownership over their di
 
 # Client
 
-```go
+```go--v1
 network := "mainnet"
 client := sdk.NewClient("app-token", network)
+```
+
+
+```go--v2
+network := "mainnet"
+sdk.Init("app-token", network)
 ```
 
 ```javascript

@@ -2,21 +2,64 @@
 
 Account is a fundenmantal unit in the bitmark blockchain system. There are multiple ways to create an account object.
 
-## New Account
+## Account Interface
 
-```go
+```go--v1
+type Account interface {
+    Sign([]byte) []byte
+    AccountNumber() string
+    Encrypt([]byte) []byte
+    Decrypt([]byte) []byte
+    EncryptionPublicKey() []byte
+}
+```
+
+```go--v2
+type Account interface {
+    Sign([]byte) []byte
+    AccountNumber() string
+    Encrypt([]byte) []byte
+    Decrypt([]byte) []byte
+    EncryptionPublicKey() []byte
+}
+```
+
+For each account object, the following function should be implemented:
+
+- `Sign([]byte) []byte`
+- `AccountNumber() string`
+- `Encrypt([]byte) []byte`
+- `Decrypt([]byte) []byte`
+- `EncryptionPublicKey() []byte`
+
+## Local Account
+
+In this SDK, we provide a built-in function for managing account locally. In this account, there are two keys included.
+They are account key and encrpytion key. The public key of an encryption key will be published to everyone so that
+people are able to exchange their data in a transfer.
+
+```go--v1
 account := client.CreateAccount()
+```
+
+
+```go--v2
+account := sdk.account.Create()
 ```
 
 ```javascript
 var account = new client.Account()
 ```
 
-For a new account, since a public key registration is required, you will create a new account by the client object.
+For a new account, since the registration of an encryption public key is required, you will create a new account by the client object.
 
-## Back up and recover an account
+<aside class="notice">
+Or we can separate the registration part from account creation.
+</aside>
 
-To make a user be able backup and recover his accounts eailsy, this SDK offers three different backing up mechanism.
+### Back up and recover an account
+
+For the local key, a user can backup and recover his accounts by the following three different kind of method:
 
 - Seed bytes
 - Mnemonic recovery phrase
@@ -24,11 +67,19 @@ To make a user be able backup and recover his accounts eailsy, this SDK offers t
 
 ### Seed bytes
 
-```go
+```go--v1
 // Back up the seed
 seed := account.Seed()
 // Recover from a seed
 account := sdk.AccountFromSeed(seed)
+```
+
+
+```go--v2
+// Back up the seed
+seed := account.Seed()
+// Recover from a seed
+account := sdk.account.AccountFromSeed(seed)
 ```
 
 ```javascript
@@ -42,11 +93,18 @@ Back up an account from its seed is a straight forward way. It outputs bytes of 
 
 ### Mnemonic recovery phrase
 
-```go
+```go--v1
 // Back up a phrase
 phrase := account.RecoveryPhrase()
 // Recover from a phrase
 account := sdk.AccountFromRecoveryPhrase(phrase)
+```
+
+```go--v2
+// Back up a phrase
+phrase := account.RecoveryPhrase()
+// Recover from a phrase
+account := sdk.account.AccountFromRecoveryPhrase(phrase)
 ```
 
 ```javascript
@@ -62,12 +120,18 @@ In this SDK, we turn an account seed into 24 word for backing up.
 
 ### Shamir's Secret Sharing
 
-
-```go
+```go--v1
 // Back up share keys
 shareKeys := account.ShamirSecretKeys()
 // Recover from share keys
 account := sdk.AccountFromShareKeys(shareKeys)
+```
+
+```go--v2
+// Back up share keys
+shareKeys := account.ShamirSecretKeys()
+// Recover from share keys
+account := sdk.account.AccountFromShareKeys(shareKeys)
 ```
 
 ```javascript
@@ -83,13 +147,17 @@ Shamir's Secret Sharing is a form of secret sharing, where a secret is divided i
 
 > **Derived from an account object**
 
-```go
-accountNumber := sdk.NewAccountNumber()
+```go--v1
+accountNumber := account.AccountNumber()
+```
+
+```go--v2
+accountNumber := account.AccountNumber()
 ```
 
 > **Recover from a WIF string**
 
-```go
+```go--v1
 sdk.AccountNumberFromString()
 // sdk.AccountNumberFromBuffer()
 ```

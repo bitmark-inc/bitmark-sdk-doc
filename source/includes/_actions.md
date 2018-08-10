@@ -1,12 +1,18 @@
 # Assets
 
-```go
+```go--v1
 asset := sdk.NewAsset(fingerprint, name, metadata, accessibility)
 asset.AddMetadata(map[string]string{
     "test": "test"
 })
 asset.Sign(account)
 client.RegisterAsset(asset)
+```
+
+```go--v2
+asset := sdk.asset.New(fingerprint, name, metadata)
+asset.Sign(account)
+assetId := sdk.asset.Register(asset)
 ```
 
 For every unregistered assets, one needs to register it before using it as a reference in an issue(next section).
@@ -24,31 +30,21 @@ accessibility   | `public`, `private` | The accessibility of the asset
 An asset record will not be confirmed without an confirmed issue point to it. Unconfirmed asset records will be expired three days after they register into the blockchain.
 </aside>
 
-## Upload an asset
-
-After you register an asset to the blockchain, you will receive an upload url for uploading your file. If it is a public asset, you need to make sure the fingerprint of the file match the record you just registered. For private asset, we will bypass the fingerprint check
-
-```go
-asset.Upload(fileBytes)
-```
-
-## Download an asset
-
-You can use this function to download an asset file if the asset record has already confirmed in the blockchain.
-
-```go
-asset.Download()
-```
-
 # Issue
 
-```go
-issueRequest := sdk.NewIssue(asset.id, account, quantityOption)
+```go--v1
+issueRequest := sdk.NewIssue(asset.id, account, quantityOption) // account is redundant
 issueRequest.Sign(account)
 bitmarks := client.IssueBitmarks(issueRequest) // return []Bitmark
 for _, bitmark := range bitmarks {
     bitmark.Status()
 }
+```
+
+```go--v2
+txReq := sdk.transaction.NewIssueRequest(assetId, quantityOption)
+txReq.Sign(account)
+txId := sdk.transaction.Submit(t)
 ```
 
 Issue is to register a digital asset into the blockchain. An issue needs to link to a specific asset. Before you issue a digital property, you need to create an asset. For each time you issue, it returns a list of bitmark objects.
@@ -67,7 +63,7 @@ Either `quantity` or `nonces` should be given for issue bitmarks.
 If `nonces` is given, it will issue by using the nonces you provided and ignore the `quantity`.
 If `quantity` is set, it generate random nonces matching the quantity and use those nonces for issue.
 
-```go
+```go--v1
 type IssueQuantityOptions struct {
     Quantity int
     Nonces []int
@@ -80,7 +76,7 @@ nonces     | _array of integer_ | issue bitmark with specific nonces
 
 ## Batch Issues
 
-```go
+```go--v1
 issue := sdk.NewIssue(asset.id, account, quantityOption)
 issue.Sign(account)
 // this step is a bit of redundant. but abstract more here,
@@ -119,10 +115,20 @@ countersigned   | `true`, `false` | represnet whether this is a 1-signature or 2
 
 ## Submit one-signature transfer
 
-```go
-transferRequest := sdk.NewTransfer(bitmark, receiver, false)
+```go--v1
+countersigned := false
+receiver := "string of receiver's account number"
+transferRequest := sdk.NewTransfer(bitmark, receiver, countersigned)
 transferRequest.Sign(account)
 client.TransferBitmark(transferRequest)
+```
+
+```go--v2
+countersigned := false
+receiver := "string of receiver's account number"
+txReq := sdk.transaction.NewTransferRequest(bitmark, receiver, countersigned)
+txReq.Sign(account)
+txId := sdk.transaction.Submit(t)
 ```
 
 A user can submit a bitmark to another without any permission.
@@ -130,7 +136,7 @@ A user can submit a bitmark to another without any permission.
 
 ## Submit two-signature transfer
 
-```go
+```go--v1
 transferRequest := sdk.NewTransfer(bitmark, receiver, true)
 transferRequest.Sign(account)
 tx := client.TransferBitmark(transferRequest)
@@ -144,7 +150,7 @@ You are not able to transfer a bitmark in the platform if there is an ongoing tr
 
 ### Cancel a two-signature transfer
 
-```go
+```go--v1
 transferRequest := tx.Cancel(accountB)
 tx := client.TransferBitmark(transferRequest)
 ```
@@ -153,10 +159,15 @@ The return of `TransferBitmark` is a transaction object. A transaction can be ca
 
 ## Take action to bitmarks
 
-```go
+```go--v1
 q := sdk.NewQueryOption(BITMARK, QueryOptions)
 q.Sign(Account)
 bitmarks := sdk.Query(q) // []Bitmark
+```
+
+```go--v2
+bitmark := sdk.bitmark.Get("id")
+tx := bitmark.LatextTx
 ```
 
 A bitmark object will include its latest transaction which means you can take action to it if it is in a `WAITING` status. Everyone can query its bitmark status.
@@ -164,16 +175,21 @@ A bitmark object will include its latest transaction which means you can take ac
 
 ### Cancel a transfer you submitted
 
-```go
+```go--v1
 transferRequest := bitmarks.CancelTransfer()
 tx := client.TransferBitmark(transferRequest)
+```
+
+```go--v2
+txRequest := tx.Cancel(account)
+txId := client.transaction.Submit(txRequest)
 ```
 
 A sender can cancel his pre-created transfers if it is not accpeted or rejected by the reciver.
 
 ### Take action to incoming two-signature tranfers
 
-```go
+```go--v1
 transferRequest := bitmarks[0].AcceptTransfer()
 tx := client.TransferBitmark(transferRequest)
 
@@ -181,6 +197,19 @@ tx := client.TransferBitmark(transferRequest)
 
 transferRequest := bitmarks[0].RejectTransfer(accountB)
 tx := client.TransferBitmark(transferRequest)
+```
+
+```go--v2
+bitmark := sdk.bitmark.Get("id")
+tx := bitmark.LatextTx
+
+txRequest := tx.Accept(account)
+txId := client.transaction.Submit(txRequest)
+
+> Another option is to reject a transfer
+
+txRequest := tx.Reject(account)
+txId := client.transaction.Submit(txRequest)
 ```
 
 A receiver can query his incoming transfers and take action on them. Each transfer can be either `accept` or `reject`.
