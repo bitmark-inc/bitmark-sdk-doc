@@ -137,9 +137,18 @@ A user can submit a bitmark to another without any permission.
 ## Submit two-signature transfer
 
 ```go--v1
-transferRequest := sdk.NewTransfer(bitmark, receiver, true)
+countersigned := true
+transferRequest := sdk.NewTransfer(bitmark, receiver, countersigned)
 transferRequest.Sign(account)
 tx := client.TransferBitmark(transferRequest)
+```
+
+```go--v2
+countersigned := true
+receiver := "string of receiver's account number"
+txReq := sdk.transaction.NewTransferRequest(bitmark, receiver, countersigned)
+txReq.Sign(account)
+txId := sdk.transaction.Submit(t)
 ```
 
 For some scenario, the developer want to get a permission from the receiver before we transfer a property to it. In the case, you will submit a two-signature transfer.

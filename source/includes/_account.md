@@ -2,7 +2,7 @@
 
 Account is a fundenmantal unit in the bitmark blockchain system. There are multiple ways to create an account object.
 
-## Account Interface
+## Account Method
 
 ```go--v1
 type Account interface {
@@ -28,9 +28,20 @@ For each account object, the following function should be implemented:
 
 - `Sign([]byte) []byte`
 - `AccountNumber() string`
-- `Encrypt([]byte) []byte`
-- `Decrypt([]byte) []byte`
-- `EncryptionPublicKey() []byte`
+- `RecoveryPhrase() string`
+- `Seed() string`
+
+## Account Static Function
+
+- `FromRecoveryPhrase`
+- `FromSeed`
+- `FromShareKeys`
+
+
+## Account Utility
+
+- `IsValidAccountNumber`
+- `GetNetwork`
 
 ## Local Account
 
@@ -41,7 +52,6 @@ people are able to exchange their data in a transfer.
 ```go--v1
 account := client.CreateAccount()
 ```
-
 
 ```go--v2
 account := sdk.account.Create()

@@ -40,10 +40,9 @@ network := "mainnet"
 client := sdk.NewClient("app-token", network)
 ```
 
-
 ```go--v2
-network := "mainnet"
-sdk.Init("app-token", network)
+config := sdk.NewConfig("api-token", "mainnet", 10,)
+sdk.Init(conf)
 ```
 
 ```javascript
@@ -52,6 +51,17 @@ var client = new sdk.Client("app-token", network)
 ```
 
 Client is an object which performs requests to bitmark API server. Before you start using it, you need to register an account from Bitmark Inc to get an API token. Please contact our [support](mailto:support@bitmark.com).
+
+
+### SDK configurations
+
+Config    | Options                      | Description
+--------- | -----------                  | -----------
+api-token   | _string_                       | Secret used by bitmark api for authorization
+network   | `mainnet`, `testnet` | This will configure which network it is going to use in a session
+requestTimeout   | _number_ | The timeout of each requests
+httpClient   | _object_ | The http client object
+
 
 <aside class="notice">
 You need to replace <code>api-token</code> with your personal API token.
