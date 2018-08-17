@@ -2,11 +2,10 @@
 title: Bitmark SDK Documentation
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - go--v1: go-v1
-  - go--v2: go-v2
   - javascript
   - swift
   - java
+  - go
 
 toc_footers:
   - <a href='https://bitmark.com'>Website</a>
@@ -20,6 +19,7 @@ toc_footers:
 includes:
   # - errors
   - account
+  - request
   - objects
   - actions
   - query
@@ -33,43 +33,48 @@ search: true
 
 Bitmark makes simple tools that empower anyone to assert ownership over their digital lives. Although digital assets increasingly constitute what we create and value most, there is no way for individuals to claim ownership of them. By building a universal digital property system, Bitmark envisions a world in which everyone owns a piece of the digital economy.The Bitmark SDK is a library that enables creation, transfer, and authentication of digital properties in the Bitmark property system. This SDK allows developers to easily build on the core Bitmark infrastructure by reading from and writing to the open-source Bitmark blockchain.
 
-# Client
+# Getting Started
 
-```go--v1
-network := "mainnet"
-client := sdk.NewClient("app-token", network)
+## Install
+
+```shell
+go get github.com/aws/bitmark-sdk-go
 ```
 
-```go--v2
-config := sdk.NewConfig("api-token", "mainnet", 10,)
-sdk.Init(conf)
-```
+## Get your API token
+
+Before you start using it, you need to register an account from Bitmark Inc to get an API token. Please contact our [support](mailto:support@bitmark.com).
+
+## Initialize
+
+### Configuration
 
 ```javascript
-var network = "mainnet"
-var client = new sdk.Client("app-token", network)
 ```
 
-Client is an object which performs requests to bitmark API server. Before you start using it, you need to register an account from Bitmark Inc to get an API token. Please contact our [support](mailto:support@bitmark.com).
+```swift
+```
 
+```java
+```
 
-### SDK configurations
+```go
+import "github.com/bitmark/bitmark-inc/bitmark-sdk-go"
 
-Config    | Options                      | Description
---------- | -----------                  | -----------
-api-token   | _string_                       | Secret used by bitmark api for authorization
-network   | `mainnet`, `testnet` | This will configure which network it is going to use in a session
-requestTimeout   | _number_ | The timeout of each requests
-httpClient   | _object_ | The http client object
-
+func main() {
+  // Go to https://github.com/bitmark-inc/bitmark-sdk-go/config.go for details.
+  httpClient := &http.Client{
+    Timeout: 10 * time.Second,
+  }
+  config := &sdk.Config{
+    APIToken: "api-token",
+    Network: "testnet",
+    HttpClient: httpClient,
+  }
+  sdk.Init(config)
+}
+```
 
 <aside class="notice">
 You need to replace <code>api-token</code> with your personal API token.
 </aside>
-
-### Client configurations
-
-Config    | Options                      | Description
---------- | -----------                  | -----------
-api-token   | _string_                       | Secret used by bitmark api for authorization
-network   | `mainnet`, `testnet` | This will configure which network it is going to use in a session

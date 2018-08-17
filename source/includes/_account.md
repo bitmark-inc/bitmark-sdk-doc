@@ -2,6 +2,106 @@
 
 Account is a fundenmantal unit in the bitmark blockchain system. There are multiple ways to create an account object.
 
+## Create an account
+
+```javascript
+```
+
+```swift
+```
+
+```java
+```
+
+```go
+account := sdk.account.New()
+```
+
+## Export an account
+
+We provide two formats for exporting an account: *seed* and *recovery phrase*, both of which store all the information needed to recover a Bitmark account.
+
+The *seed* is designed for services which act as custodians of Bitmark accounts. By mapping user ID and bitmark account seed, you can manage bitmarks and assets on behalf of your application users. Make sure seeds are stored in a secure way.
+
+The *recovery phrase*, which consists of 24 mnemonic words, is designed for individuals to backup their accounts. The recovery phrase should be handed over to the user after the account is created.
+
+```javascript
+```
+
+```swift
+```
+
+```java
+```
+
+```go
+// to seed
+seed := account.Seed()
+// to recovery phrase
+phrase := account.RecoveryPhrase()
+```
+
+## Import an account
+
+```javascript
+```
+
+```swift
+```
+
+```java
+```
+
+```go
+// from seed
+account := sdk.account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
+
+// from recovery phrase
+account := sdk.account.FromSeed([]string{
+    "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
+    "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
+    "kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you",
+})
+```
+
+## Get the account number
+
+The account number of an account serves as a pseudonymous identifier within the Bitmark blockchain.
+
+```javascript
+```
+
+```swift
+```
+
+```java
+```
+
+```go
+accountNumber := acct.AccountNumber()
+// ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
+```
+
+## Account number utility functions
+
+```javascript
+```
+
+```swift
+```
+
+```java
+```
+
+```go
+valid := sdk.account.IsValidAccountNumber(acctNo)
+network, pubkey := sdk.account.parseAccountNumber(acctNo)
+```
+
+<aside class="warning">
+THE FOLLOWING IS THE NOTES FOR SDK DESIGNERS
+</aside>
+
 ## Account Method
 
 ```go--v1
