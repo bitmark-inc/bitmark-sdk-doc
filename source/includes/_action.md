@@ -6,7 +6,8 @@ For every unregistered assets, one needs to register it before using it as a ref
 ```
 
 ```swift
-var params = try Asset.NewRegistrationParams(name: "asset_name", metadata: ["desc": "sdk example"])
+var params = try Asset.NewRegistrationParams(name: "asset_name", 
+                                            metadata: ["desc": "sdk example"])
 
 let fileURL = Bundle.main.url(forResource: "file", withExtension: ".ext")!
 try params.setFingerprint(fileurl: fileURL)
@@ -53,7 +54,8 @@ Nonce is a counter value that distinguishes between different issuances for the 
 ```
 
 ```swift
-var params = Bitmark.NewIssunaceParams(assetId: assetId, nonces: [1..100])
+var params = Bitmark.NewIssunaceParams(assetId: assetId, 
+                                       nonces: [1..100])
 try params.sign(issuer)
 
 let bitmarkIds = try Bitmark.issue(params)
@@ -83,7 +85,8 @@ Issue as you go.
 ```
 
 ```swift
-var params = Bitmark.NewIssunaceParams(assetId: assetId, quantity: 100)
+var params = Bitmark.NewIssunaceParams(assetId: assetId, 
+                                       quantity: 100)
 try params.sign(issuer)
 
 let bitmarkIds = try Bitmark.issue(params)
@@ -120,7 +123,8 @@ What makes two-signature transfer different from one-signature transfer is that 
 ```
 
 ```swift
-var params = Bitmark.NewTransferParams(receiver: receiverAccountNumber, requireCounterSign: false)
+var params = Bitmark.NewTransferParams(receiver: receiverAccountNumber, 
+                                       requireCounterSign: false)
 try params.from(bitmarkId: bitmarkId)
 try params.sign(account)
 
@@ -155,7 +159,8 @@ You are not able to transfer a bitmark in the platform if there is an ongoing tr
 ```
 
 ```swift
-var params := Bitmark.NewOfferParams(receiver: receiverAccountNumber, requireCounterSign: true)
+var params := Bitmark.NewOfferParams(receiver: receiverAccountNumber, 
+                                     requireCounterSign: true)
 try params.from(bitmarkId: bitmarkId)
 try params.sign(account)
 
@@ -180,6 +185,12 @@ sdk.bitmark.Offer(params)
 ```
 
 ```swift
+var builder = QueryBuilder.NewListBuilder()
+let params = builder
+    .status("offering")
+    .offerTo("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
+    .build()
+let bitmarks = try Bitmark.List(params)
 ```
 
 ```java
