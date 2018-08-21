@@ -27,16 +27,16 @@ We provide two formats for exporting an account: *seed* and *recovery phrase*, b
 ```
 
 ```swift
-// to seed
 let seed = try account.seed()
+// 5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd
 ```
 
 ```java
 ```
 
 ```go
-// to seed
 seed := account.Seed()
+// 5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd
 ```
 
 The *seed* is designed for services which act as custodians of Bitmark accounts. By mapping user ID and bitmark account seed, you can manage bitmarks and assets on behalf of your application users. Make sure seeds are stored in a secure way.
@@ -47,16 +47,22 @@ Back up an account from its seed is a straight forward way. It outputs bytes of 
 ```
 
 ```swift
-// to recovery phrase
 let phrase = try account.recoveryPhrase()
+// ["acid", "maze", "movie", "turn", "stereo", "over",
+//  "legal", "unhappy", "deny", "early", "scout", "energy",
+//  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
+//  "flower", "knee", "sick", "number", "acoustic", "you"]
 ```
 
 ```java
 ```
 
 ```go
-// to recovery phrase
 phrase := account.RecoveryPhrase()
+// ["acid", "maze", "movie", "turn", "stereo", "over",
+//  "legal", "unhappy", "deny", "early", "scout", "energy",
+//  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
+//  "flower", "knee", "sick", "number", "acoustic", "you"]
 ```
 
 The *recovery phrase*, which consists of 24 mnemonic words, is designed for individuals to backup their accounts. The recovery phrase should be handed over to the user after the account is created.
@@ -71,7 +77,6 @@ On the contrast, there are functions for you to recover the accounts.
 ```
 
 ```swift
-// from seed
 account = Account(fromSeed: "5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
 ```
 
@@ -79,7 +84,6 @@ account = Account(fromSeed: "5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS
 ```
 
 ```go
-// from seed
 account := sdk.account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
 ```
 
@@ -94,7 +98,6 @@ With a seed, you can recover an account.
 ```
 
 ```swift
-// from recovery phrase
 let account = try Account(fromRecoveryPhrase: [
     "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
     "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
@@ -106,7 +109,6 @@ let account = try Account(fromRecoveryPhrase: [
 ```
 
 ```go
-// from recovery phrase
 account := sdk.account.FromRecoveryPhrase([]string{
     "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
     "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
