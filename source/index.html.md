@@ -19,9 +19,7 @@ toc_footers:
 includes:
   # - errors
   - account
-  - request
-  - objects
-  - actions
+  - action
   - query
   - examples
 
