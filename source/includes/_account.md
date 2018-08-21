@@ -15,7 +15,7 @@ let account = try Account()
 ```
 
 ```go
-account := sdk.account.New()
+account := sdk.Account.New()
 ```
 
 ## Export an account
@@ -84,7 +84,7 @@ account = Account(fromSeed: "5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS
 ```
 
 ```go
-account := sdk.account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
+account := sdk.Account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
 ```
 
 ### Recover from seed
@@ -109,7 +109,7 @@ let account = try Account(fromRecoveryPhrase: [
 ```
 
 ```go
-account := sdk.account.FromRecoveryPhrase([]string{
+account := sdk.Account.FromRecoveryPhrase([]string{
     "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
     "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
     "kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you",
@@ -157,7 +157,7 @@ let isValid = Account.isValidAccountNumber(accountNumber)
 ```
 
 ```go
-valid := sdk.account.IsValidAccountNumber(accountNumber)
+valid := sdk.Account.IsValidAccountNumber(accountNumber)
 ```
 
 The function chech whether a given account number is valid in currently runtime environment. It returns `true` / `false`.
@@ -175,7 +175,7 @@ let (network, pubkey) = try Account.parseAccountNumber(accountNumber)
 ```
 
 ```go
-network, pubkey := sdk.account.parseAccountNumber(accountNumber)
+network, pubkey := sdk.Account.ParseAccountNumber(accountNumber)
 ```
 
 The function parses an account number and returns its network and public key.
