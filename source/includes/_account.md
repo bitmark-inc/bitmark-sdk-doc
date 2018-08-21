@@ -8,6 +8,7 @@ Account is a fundenmantal unit in the bitmark blockchain system. There are multi
 ```
 
 ```swift
+let account = try Account()
 ```
 
 ```java
@@ -33,6 +34,11 @@ The concept of this recovery phrase comes from [BIP39 - Mnemonic code for genera
 ```
 
 ```swift
+// to seed
+let seed = try account.seed()
+
+// to recovery phrase
+let phrase = try account.recoveryPhrase()
 ```
 
 ```java
@@ -51,6 +57,15 @@ phrase := account.RecoveryPhrase()
 ```
 
 ```swift
+// from seed
+account = Account(fromSeed: "5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
+
+// from recovery phrase
+let account = try Account(fromRecoveryPhrase: [
+    "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
+    "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
+    "kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you"]
+)
 ```
 
 ```java
@@ -78,6 +93,8 @@ Account number is a combination of arbitrary strings. In the real life, you depo
 ```
 
 ```swift
+let accountNumber = account.accountNumber()
+// ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
 ```
 
 ```java
@@ -94,6 +111,8 @@ accountNumber := acct.AccountNumber()
 ```
 
 ```swift
+let isValid = Account.IsValidAccountNumber(acctNo)
+let (network, pubkey) := try Account.parseAccountNumber(acctNo)
 ```
 
 ```java

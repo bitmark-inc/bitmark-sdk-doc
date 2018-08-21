@@ -6,6 +6,13 @@ For every unregistered assets, one needs to register it before using it as a ref
 ```
 
 ```swift
+var params = try Asset.NewRegistrationParams(name: "asset_name", metadata: ["desc": "sdk example"])
+
+let fileURL = Bundle.main.url(forResource: "file", withExtension: ".ext")!
+try params.setFingerprint(fileurl: fileURL)
+try params.sign(account)
+
+let assetId = try Asset.Register(params)
 ```
 
 ```java
@@ -46,6 +53,10 @@ Nonce is a counter value that distinguishes between different issuances for the 
 ```
 
 ```swift
+var params = Bitmark.NewIssunaceParams(assetId: assetId, nonces: [1..100])
+try params.sign(issuer)
+
+let bitmarkIds = try Bitmark.issue(params)
 ```
 
 ```java
@@ -72,6 +83,10 @@ Issue as you go.
 ```
 
 ```swift
+var params = Bitmark.NewIssunaceParams(assetId: assetId, quantity: 100)
+try params.sign(issuer)
+
+let bitmarkIds = try Bitmark.issue(params)
 ```
 
 ```java
@@ -105,6 +120,11 @@ What makes two-signature transfer different from one-signature transfer is that 
 ```
 
 ```swift
+var params = Bitmark.NewTransferParams(receiver: receiverAccountNumber, requireCounterSign: false)
+try params.from(bitmarkId: bitmarkId)
+try params.sign(account)
+
+let txId = try Bitmark.transfer(params)
 ```
 
 ```java
@@ -135,6 +155,11 @@ You are not able to transfer a bitmark in the platform if there is an ongoing tr
 ```
 
 ```swift
+var params := Bitmark.NewOfferParams(receiver: receiverAccountNumber, requireCounterSign: true)
+try params.from(bitmarkId: bitmarkId)
+try params.sign(account)
+
+try Bitmark.offer(params)
 ```
 
 ```java
