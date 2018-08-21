@@ -33,15 +33,39 @@ Bitmark makes simple tools that empower anyone to assert ownership over their di
 
 # Getting Started
 
-## Install
+## Installation
+
+```javascript
+```
 
 ```swift
 pod 'BitmarkSDK'
 ```
 
-```shell
+```java
+```
+
+```go
 go get github.com/aws/bitmark-sdk-go
 ```
+
+Bitmark packages the SDK library for varies of languages. To install it, you can run the command.
+
+```javascript
+```
+
+```swift
+import BitmarkSDK
+```
+
+```java
+```
+
+```go
+import "github.com/bitmark-inc/bitmark-sdk-go"
+```
+
+After install the sdk, you can import the library in your code like this.
 
 ## Get your API token
 
