@@ -22,13 +22,6 @@ account := sdk.account.New()
 
 We provide two formats for exporting an account: *seed* and *recovery phrase*, both of which store all the information needed to recover a Bitmark account.
 
-The *seed* is designed for services which act as custodians of Bitmark accounts. By mapping user ID and bitmark account seed, you can manage bitmarks and assets on behalf of your application users. Make sure seeds are stored in a secure way.
-
-Back up an account from its seed is a straight forward way. It outputs bytes of an account seed. You can save it in your storage, such as, a database. And use it to recover an account for a later on operation.
-
-The *recovery phrase*, which consists of 24 mnemonic words, is designed for individuals to backup their accounts. The recovery phrase should be handed over to the user after the account is created.
-
-The concept of this recovery phrase comes from [BIP39 - Mnemonic code for generating deterministic keys](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki). With these phrase, people can easily written down the human readable words instead of random strings which is difficult to understand.
 
 ```javascript
 ```
@@ -36,9 +29,6 @@ The concept of this recovery phrase comes from [BIP39 - Mnemonic code for genera
 ```swift
 // to seed
 let seed = try account.seed()
-
-// to recovery phrase
-let phrase = try account.recoveryPhrase()
 ```
 
 ```java
@@ -47,11 +37,35 @@ let phrase = try account.recoveryPhrase()
 ```go
 // to seed
 seed := account.Seed()
+```
+
+The *seed* is designed for services which act as custodians of Bitmark accounts. By mapping user ID and bitmark account seed, you can manage bitmarks and assets on behalf of your application users. Make sure seeds are stored in a secure way.
+
+Back up an account from its seed is a straight forward way. It outputs bytes of an account seed. You can save it in your storage, such as, a database. And use it to recover an account for a later on operation.
+
+```javascript
+```
+
+```swift
+// to recovery phrase
+let phrase = try account.recoveryPhrase()
+```
+
+```java
+```
+
+```go
 // to recovery phrase
 phrase := account.RecoveryPhrase()
 ```
 
+The *recovery phrase*, which consists of 24 mnemonic words, is designed for individuals to backup their accounts. The recovery phrase should be handed over to the user after the account is created.
+
+The concept of this recovery phrase comes from [BIP39 - Mnemonic code for generating deterministic keys](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki). With these phrase, people can easily written down the human readable words instead of random strings which is difficult to understand.
+
 ## Import an account
+
+On the contrast, there are functions for you to recover the accounts.
 
 ```javascript
 ```
@@ -59,7 +73,27 @@ phrase := account.RecoveryPhrase()
 ```swift
 // from seed
 account = Account(fromSeed: "5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
+```
 
+```java
+```
+
+```go
+// from seed
+account := sdk.account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
+```
+
+### Recover from seed
+
+With a seed, you can recover an account.
+
+### Recover from phrase
+
+
+```javascript
+```
+
+```swift
 // from recovery phrase
 let account = try Account(fromRecoveryPhrase: [
     "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
@@ -72,16 +106,15 @@ let account = try Account(fromRecoveryPhrase: [
 ```
 
 ```go
-// from seed
-account := sdk.account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
-
 // from recovery phrase
-account := sdk.account.FromSeed([]string{
+account := sdk.account.FromRecoveryPhrase([]string{
     "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
     "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
     "kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you",
 })
 ```
+
+With a phrase, you can recover an account.
 
 ## Get the account number
 
@@ -97,7 +130,7 @@ let accountNumber = account.accountNumber()
 ```
 
 ```go
-accountNumber := acct.AccountNumber()
+accountNumber := account.AccountNumber()
 // ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
 ```
 
