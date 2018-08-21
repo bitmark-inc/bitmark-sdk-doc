@@ -35,6 +35,10 @@ Bitmark makes simple tools that empower anyone to assert ownership over their di
 
 ## Install
 
+```swift
+pod 'BitmarkSDK'
+```
+
 ```shell
 go get github.com/aws/bitmark-sdk-go
 ```
@@ -51,6 +55,7 @@ Before you start using it, you need to register an account from Bitmark Inc to g
 ```
 
 ```swift
+import BitmarkSDK
 ```
 
 ```java

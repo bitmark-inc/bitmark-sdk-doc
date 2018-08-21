@@ -6,7 +6,7 @@ For every unregistered assets, one needs to register it before using it as a ref
 ```
 
 ```swift
-var params = try Asset.NewRegistrationParams(name: "asset_name", 
+var params = try Asset.newRegistrationParams(name: "asset_name", 
                                             metadata: ["desc": "sdk example"])
 
 let fileURL = Bundle.main.url(forResource: "file", withExtension: ".ext")!
@@ -54,7 +54,7 @@ Nonce is a counter value that distinguishes between different issuances for the 
 ```
 
 ```swift
-var params = Bitmark.NewIssunaceParams(assetId: assetId, 
+var params = Bitmark.newIssuanceParams(assetId: assetId, 
                                        nonces: [1..100])
 try params.sign(issuer)
 
@@ -85,7 +85,7 @@ Issue as you go.
 ```
 
 ```swift
-var params = Bitmark.NewIssunaceParams(assetId: assetId, 
+var params = Bitmark.newIssuanceParams(assetId: assetId, 
                                        quantity: 100)
 try params.sign(issuer)
 
@@ -123,7 +123,7 @@ What makes two-signature transfer different from one-signature transfer is that 
 ```
 
 ```swift
-var params = Bitmark.NewTransferParams(receiver: receiverAccountNumber, 
+var params = Bitmark.newTransferParams(receiver: receiverAccountNumber, 
                                        requireCounterSign: false)
 try params.from(bitmarkId: bitmarkId)
 try params.sign(account)
@@ -159,7 +159,7 @@ You are not able to transfer a bitmark in the platform if there is an ongoing tr
 ```
 
 ```swift
-var params := Bitmark.NewOfferParams(receiver: receiverAccountNumber, 
+var params := Bitmark.newOfferParams(receiver: receiverAccountNumber, 
                                      requireCounterSign: true)
 try params.from(bitmarkId: bitmarkId)
 try params.sign(account)
@@ -185,7 +185,7 @@ sdk.bitmark.Offer(params)
 ```
 
 ```swift
-var builder = QueryBuilder.NewListBuilder()
+var builder = QueryBuilder.newListBuilder()
 let params = builder
     .status("offering")
     .offerTo("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
@@ -211,6 +211,9 @@ bitmarks, _ := sdk.bitmark.List(params)
 ```
 
 ```swift
+var params = Bitmark.newTransferResponseParams(bitmark: bitmark, response: .accept)
+try params.sign(receiver)
+let txid = try Bitmark.response(params)
 ```
 
 ```java
@@ -228,6 +231,9 @@ txId, _ := sdk.bitmark.Respond(params)
 ```
 
 ```swift
+var params = Bitmark.newTransferResponseParams(bitmark: bitmark, response: .reject)
+try params.sign(receiver)
+try Bitmark.response(params)
 ```
 
 ```java
@@ -245,6 +251,9 @@ sdk.bitmark.Respond(params)
 ```
 
 ```swift
+var params = Bitmark.newTransferResponseParams(bitmark: bitmark, response: .cancel)
+try params.sign(receiver)
+try Bitmark.response(params)
 ```
 
 ```java

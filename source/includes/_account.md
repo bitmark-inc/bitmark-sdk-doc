@@ -111,7 +111,7 @@ accountNumber := acct.AccountNumber()
 ```
 
 ```swift
-let isValid = Account.IsValidAccountNumber(acctNo)
+let isValid = Account.isValidAccountNumber(acctNo)
 let (network, pubkey) = try Account.parseAccountNumber(acctNo)
 ```
 
