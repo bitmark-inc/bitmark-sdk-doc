@@ -13,7 +13,7 @@ let fileURL = Bundle.main.url(forResource: "file", withExtension: ".ext")!
 try params.setFingerprint(fileurl: fileURL)
 try params.sign(account)
 
-let assetId = try Asset.Register(params)
+let assetId = try Asset.register(params)
 ```
 
 ```java
