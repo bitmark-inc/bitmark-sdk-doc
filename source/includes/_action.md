@@ -197,7 +197,7 @@ let bitmarks = try Bitmark.List(params)
 ```
 
 ```go
-builder := sqlbuilder.NewListBuilder()
+builder := sdk.NewBitmarkQueryBuilder()
 params := builder.
     Status("offering").
     OfferTo("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog").
