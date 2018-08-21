@@ -58,7 +58,6 @@ params := sdk.bitmark.NewIssuanceParams(
         Nonces: []int{1, 2, 3, ..., 100},
     })
 params.Sign(issuer)
-params.JSON()
 
 bitmarkIds, _ := sdk.bitmark.Issue(issuances)
 ```
@@ -85,7 +84,6 @@ params := sdk.bitmark.NewIssuanceParams(
         Quantity: 100,
     }))
 params.Sign(issuer)
-params.JSON()
 
 bitmarkIds, _ := sdk.bitmark.Issue(params)
 ```
@@ -117,7 +115,6 @@ params := sdk.bitmark.NewTransferParams(receiverAccountNumber, false)
 params.FromBitmark() // asynchrous, just to check the head_id
 // params.FromTx() // or synchrous
 params.Sign(sender)
-params.JSON()
 
 txId, _ := sdk.bitmark.Transfer(params)
 ```
@@ -144,7 +141,7 @@ You are not able to transfer a bitmark in the platform if there is an ongoing tr
 ```
 
 ```go
-params := sdk.bitmark.NewTransferOfferParams(receiverAccountNumber, true)
+params := sdk.bitmark.NewOfferParams(receiverAccountNumber, true)
 params.FromBitmark() // asynchrous, just to check the head_id
 // params.FromTx() // or synchrous
 params.Sign(sender)
