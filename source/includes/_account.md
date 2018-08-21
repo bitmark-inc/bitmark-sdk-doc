@@ -105,20 +105,42 @@ accountNumber := acct.AccountNumber()
 // ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
 ```
 
-## Account number utility functions
+## Account utility functions
+
+In the account library, there are some helper functions.
+
+### Validate account number
 
 ```javascript
 ```
 
 ```swift
-let isValid = Account.isValidAccountNumber(acctNo)
-let (network, pubkey) = try Account.parseAccountNumber(acctNo)
+let isValid = Account.isValidAccountNumber(accountNumber)
 ```
 
 ```java
 ```
 
 ```go
-valid := sdk.account.IsValidAccountNumber(acctNo)
-network, pubkey := sdk.account.parseAccountNumber(acctNo)
+valid := sdk.account.IsValidAccountNumber(accountNumber)
 ```
+
+The function chech whether a given account number is valid in currently runtime environment. It returns `true` / `false`.
+
+### Parse information from an account number
+
+```javascript
+```
+
+```swift
+let (network, pubkey) = try Account.parseAccountNumber(accountNumber)
+```
+
+```java
+```
+
+```go
+network, pubkey := sdk.account.parseAccountNumber(accountNumber)
+```
+
+The function parses an account number and returns its network and public key.
