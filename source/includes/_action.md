@@ -1,12 +1,10 @@
 # Register an asset
 
-For every unregistered assets, one needs to register it before using it as a reference in an issue(next section).
-
 ```javascript
 ```
 
 ```swift
-var params = try Asset.newRegistrationParams(name: "asset_name", 
+var params = try Asset.newRegistrationParams(name: "asset_name",
                                             metadata: ["desc": "sdk example"])
 
 let fileURL = Bundle.main.url(forResource: "file", withExtension: ".ext")!
@@ -20,7 +18,7 @@ let assetId = try Asset.register(params)
 ```
 
 ```go
-params := sdk.asset.NewRegistrationParams(
+params := sdk.Asset.NewRegistrationParams(
     "asset_name",
     map[string]string{"desc": "sdk example"},
 )
@@ -31,8 +29,10 @@ params.SetFingerprint(file)
 params.Sign(account)
 params.JSON()
 
-assetId, _ := sdk.asset.Register(params)
+assetId, _ := sdk.Asset.Register(params)
 ```
+
+For every unregistered assets, one needs to register it before using it as a reference in an issue(next section).
 
 <aside class="notice">
 An asset record will not be confirmed without an confirmed issue point to it. Unconfirmed asset records will be expired three days after they register into the blockchain.
@@ -42,19 +42,18 @@ An asset record will not be confirmed without an confirmed issue point to it. Un
 
 Issue is to register a digital asset into the blockchain. An issue needs to link to a specific asset. Before you issue a digital property, you need to create an asset. For each time you issue, it returns a list of bitmark objects.
 
-Either `quantity` or `nonces` should be given for issue bitmarks.
-If `nonces` is given, it will issue by using the nonces you provided and ignore the `quantity`.
-If `quantity` is set, it generate random nonces matching the quantity and use those nonces for issue.
+<aside class="notice">
+Either <code>quantity</code> or <code>nonces</code> should be given for issue bitmarks.
+If <code>nonces</code> is given, it will issue by using the nonces you provided and ignore the <code>quantity</code>.
+</aside>
 
-## create issuances with nonce
-
-Nonce is a counter value that distinguishes between different issuances for the same asset. The nonce can be viewed as edition number. For example, to generate 100 editions for a digital card:
+## Create issuances with nonces
 
 ```javascript
 ```
 
 ```swift
-var params = Bitmark.newIssuanceParams(assetId: assetId, 
+var params = Bitmark.newIssuanceParams(assetId: assetId,
                                        nonces: [1..100])
 try params.sign(issuer)
 
@@ -65,27 +64,27 @@ let bitmarkIds = try Bitmark.issue(params)
 ```
 
 ```go
-params := sdk.bitmark.NewIssuanceParams(
+params := sdk.Bitmark.NewIssuanceParams(
     assetId,
-    sdk.bitmark.QuantityOptions{
+    sdk.Bitmark.QuantityOptions{
         Nonces: []int{1, 2, 3, ..., 100},
     })
 params.Sign(issuer)
 
-bitmarkIds, _ := sdk.bitmark.Issue(issuances)
+bitmarkIds, _ := sdk.Bitmark.Issue(issuances)
 ```
 
-Nonce should be unique. To issue more bitmarks, make sure that new nonces are set.
+Nonce is a counter value that distinguishes between different issuances for the same asset of the same owner. The nonce can be viewed as edition number. For example, to generate 100 editions for a digital card.
 
-## create issuances without nonce
+The combination of nonce, owner and asset should be unique over the blockchain. To issue more bitmarks, developers need to make sure there is no duplicated nonces for issuing within a same owner and asset pair.
 
-Issue as you go.
+## Create issuances without nonces
 
 ```javascript
 ```
 
 ```swift
-var params = Bitmark.newIssuanceParams(assetId: assetId, 
+var params = Bitmark.newIssuanceParams(assetId: assetId,
                                        quantity: 100)
 try params.sign(issuer)
 
@@ -96,15 +95,17 @@ let bitmarkIds = try Bitmark.issue(params)
 ```
 
 ```go
-params := sdk.bitmark.NewIssuanceParams(
+params := sdk.Bitmark.NewIssuanceParams(
     assetId,
-    sdk.bitmark.QuantityOptions{
+    sdk.Bitmark.QuantityOptions{
         Quantity: 100,
     }))
 params.Sign(issuer)
 
-bitmarkIds, _ := sdk.bitmark.Issue(params)
+bitmarkIds, _ := sdk.Bitmark.Issue(params)
 ```
+
+In the case that the nonce does not meaningful in issues, developers can use set a `quantity` for issuing. In this way, the SDK will generate random nonces matching the quantity automatically and use those nonces for issuing.
 
 # Transfer a bitmark
 
@@ -123,7 +124,7 @@ What makes two-signature transfer different from one-signature transfer is that 
 ```
 
 ```swift
-var params = Bitmark.newTransferParams(receiver: receiverAccountNumber, 
+var params = Bitmark.newTransferParams(receiver: receiverAccountNumber,
                                        requireCounterSign: false)
 try params.from(bitmarkId: bitmarkId)
 try params.sign(account)
@@ -135,12 +136,12 @@ let txId = try Bitmark.transfer(params)
 ```
 
 ```go
-params := sdk.bitmark.NewTransferParams(receiverAccountNumber, false)
+params := sdk.Bitmark.NewTransferParams(receiverAccountNumber, false)
 params.FromBitmark() // asynchrous, just to check the head_id
 // params.FromTx() // or synchrous
 params.Sign(sender)
 
-txId, _ := sdk.bitmark.Transfer(params)
+txId, _ := sdk.Bitmark.Transfer(params)
 ```
 
 A user can submit a bitmark to another without any permission.
@@ -159,7 +160,7 @@ You are not able to transfer a bitmark in the platform if there is an ongoing tr
 ```
 
 ```swift
-var params := Bitmark.newOfferParams(receiver: receiverAccountNumber, 
+var params := Bitmark.newOfferParams(receiver: receiverAccountNumber,
                                      requireCounterSign: true)
 try params.from(bitmarkId: bitmarkId)
 try params.sign(account)
@@ -171,12 +172,12 @@ try Bitmark.offer(params)
 ```
 
 ```go
-params := sdk.bitmark.NewOfferParams(receiverAccountNumber, true)
+params := sdk.Bitmark.NewOfferParams(receiverAccountNumber, true)
 params.FromBitmark() // asynchrous, just to check the head_id
 // params.FromTx() // or synchrous
 params.Sign(sender)
 
-sdk.bitmark.Offer(params)
+sdk.Bitmark.Offer(params)
 ```
 
 > Receiver needs to query if there is any bitmark transder offer waiting for his signature.
@@ -202,10 +203,10 @@ params := builder.
     Status("offering").
     OfferTo("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog").
     Build()
-bitmarks, _ := sdk.bitmark.List(params)
+bitmarks, _ := sdk.Bitmark.List(params)
 ```
 
-> Receiver wants to accept the bitmark transfer offer 
+> Receiver wants to accept the bitmark transfer offer
 
 ```javascript
 ```
@@ -220,12 +221,12 @@ let txid = try Bitmark.response(params)
 ```
 
 ```go
-params := sdk.bitmark.NewTransferResponseParams(bitmark, sdk.bitmark.Accpet)
+params := sdk.Bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Accpet)
 params.Sign(receiver)
-txId, _ := sdk.bitmark.Respond(params)
+txId, _ := sdk.Bitmark.Respond(params)
 ```
 
-> Receiver wants to reject the bitmark transfer offer 
+> Receiver wants to reject the bitmark transfer offer
 
 ```javascript
 ```
@@ -240,9 +241,9 @@ try Bitmark.response(params)
 ```
 
 ```go
-params := sdk.bitmark.NewTransferResponseParams(bitmark, sdk.bitmark.Reject)
+params := sdk.Bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Reject)
 params.Sign(receiver)
-sdk.bitmark.Respond(params)
+sdk.Bitmark.Respond(params)
 ```
 
 > Sender wants to cancel the bitmark transfer offer
@@ -260,7 +261,7 @@ try Bitmark.response(params)
 ```
 
 ```go
-params := sdk.bitmark.NewTransferResponseParams(bitmark, sdk.bitmark.Cancel)
+params := sdk.Bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Cancel)
 params.Sign(receiver)
-sdk.bitmark.Respond(params)
+sdk.Bitmark.Respond(params)
 ```
