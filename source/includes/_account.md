@@ -85,10 +85,6 @@ account := sdk.account.FromSeed([]string{
 
 ## Get the account number
 
-The account number of an account serves as a pseudonymous identifier within the Bitmark blockchain.
-
-Account number is a combination of arbitrary strings. In the real life, you deposit to and withdraw from a bank account. With the bitmark account number, people can check the ownership, transfer from and transfer to that account.
-
 ```javascript
 ```
 
@@ -104,6 +100,10 @@ let accountNumber = account.accountNumber()
 accountNumber := acct.AccountNumber()
 // ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
 ```
+
+The account number of an account serves as a pseudonymous identifier within the Bitmark blockchain.
+
+Account number is a combination of arbitrary strings. In the real life, you deposit to and withdraw from a bank account. With the bitmark account number, people can check the ownership, transfer from and transfer to that account.
 
 ## Account utility functions
 
