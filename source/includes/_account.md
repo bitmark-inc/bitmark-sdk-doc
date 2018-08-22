@@ -5,6 +5,7 @@ Account is a fundenmantal unit in the bitmark blockchain system. There are multi
 ## Create an account
 
 ```javascript
+let account = sdk.Account();
 ```
 
 ```swift
@@ -24,6 +25,8 @@ We provide two formats for exporting an account: *seed* and *recovery phrase*, b
 
 
 ```javascript
+let seed = account.getSeed();
+// 5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd
 ```
 
 ```swift
@@ -44,6 +47,11 @@ The *seed* is designed for services which act as custodians of Bitmark accounts.
 Back up an account from its seed is a straight forward way. It outputs bytes of an account seed. You can save it in your storage, such as, a database. And use it to recover an account for a later on operation.
 
 ```javascript
+let recoveryPhrase = account.getRecoveryPhrase();
+// ["acid", "maze", "movie", "turn", "stereo", "over",
+//  "legal", "unhappy", "deny", "early", "scout", "energy",
+//  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
+//  "flower", "knee", "sick", "number", "acoustic", "you"]
 ```
 
 ```swift
@@ -74,6 +82,7 @@ The concept of this recovery phrase comes from [BIP39 - Mnemonic code for genera
 On the contrast, there are functions for you to recover the accounts.
 
 ```javascript
+let account = Account.fromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd");
 ```
 
 ```swift
@@ -95,6 +104,11 @@ With a seed, you can recover an account.
 
 
 ```javascript
+let account = Account.fromRecoveryPhrase([
+    "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
+    "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
+    "kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you"]
+);
 ```
 
 ```swift
@@ -121,6 +135,8 @@ With a phrase, you can recover an account.
 ## Get the account number
 
 ```javascript
+let accountNumber = account.getAccountNumber();
+// ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
 ```
 
 ```swift
@@ -147,6 +163,7 @@ In the account library, there are some helper functions.
 ### Validate account number
 
 ```javascript
+let isValid = Account.isValidAccountNumber(accountNumber);
 ```
 
 ```swift
@@ -165,6 +182,11 @@ The function chech whether a given account number is valid in currently runtime 
 ### Parse information from an account number
 
 ```javascript
+let accountInfo = Account.parseAccountNumber(accountNumber);
+//{
+//  network: "livenet",
+//  pubKey: "6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy"
+//}
 ```
 
 ```swift

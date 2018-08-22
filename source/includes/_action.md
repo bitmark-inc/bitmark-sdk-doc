@@ -1,6 +1,11 @@
 # Register an asset
 
 ```javascript
+let params = Asset.newRegistrationParams(assetName, metadata);
+params.setFingerprint(filePath);
+params.sign(account);
+
+let assetId = Asset.register(params);
 ```
 
 ```swift
@@ -50,6 +55,10 @@ If <code>nonces</code> is given, it will issue by using the nonces you provided 
 ## Create issuances with nonces
 
 ```javascript
+let params = Bitmark.newIssuanceParams(assetId, nonces = [1, 2, ..., 100]);
+params.sign(account);
+
+let bitmarkIds = Bitmark.issue(params);
 ```
 
 ```swift
@@ -81,6 +90,10 @@ The combination of nonce, owner and asset should be unique over the blockchain. 
 ## Create issuances without nonces
 
 ```javascript
+let params = Bitmark.newIssuanceParams(assetId, quantity = 100);
+params.sign(account);
+
+let bitmarkIds = Bitmark.issue(params);
 ```
 
 ```swift
@@ -121,6 +134,11 @@ What makes two-signature transfer different from one-signature transfer is that 
 ## 1-sig transfer
 
 ```javascript
+let params = Bitmark.newTransferParams(receiverAccountNumber, requireCounterSign = false);
+params.from(bitmarkId);
+params.sign(account);
+
+let txId = Bitmark.transfer(params);
 ```
 
 ```swift
@@ -157,6 +175,11 @@ You are not able to transfer a bitmark in the platform if there is an ongoing tr
 > Sender creates a transfer offer
 
 ```javascript
+let params = Bitmark.newOfferParams(receiverAccountNumber, requireCounterSign = true);
+params.from(bitmarkId);
+params.sign(senderAccount);
+
+Bitmark.offer(params);
 ```
 
 ```swift
@@ -183,6 +206,13 @@ sdk.Bitmark.Offer(params)
 > Receiver needs to query if there is any bitmark transder offer waiting for his signature.
 
 ```javascript
+let builder = QueryBuilder.newListBuilder();
+let params = builder
+    .status("offering")
+    .offerTo("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
+    .build();
+
+let bitmarks = Bitmark.List(params);
 ```
 
 ```swift
@@ -209,6 +239,10 @@ bitmarks, _ := sdk.Bitmark.List(params)
 > Receiver wants to accept the bitmark transfer offer
 
 ```javascript
+let params = Bitmark.newTransferResponseParams(bitmark, response = RESPONSE_TYPE.ACCEPT);
+params.sign(receiverAccount);
+
+let txid = Bitmark.response(params);
 ```
 
 ```swift
@@ -229,6 +263,10 @@ txId, _ := sdk.Bitmark.Respond(params)
 > Receiver wants to reject the bitmark transfer offer
 
 ```javascript
+let params = Bitmark.newTransferResponseParams(bitmark, response = RESPONSE_TYPE.REJECT);
+params.sign(receiverAccount);
+
+Bitmark.response(params);
 ```
 
 ```swift
@@ -249,6 +287,10 @@ sdk.Bitmark.Respond(params)
 > Sender wants to cancel the bitmark transfer offer
 
 ```javascript
+let params = Bitmark.newTransferResponseParams(bitmark, response = RESPONSE_TYPE.CANCEL);
+params.sign(senderAccount);
+
+Bitmark.response(params);
 ```
 
 ```swift

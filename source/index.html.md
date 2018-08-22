@@ -36,6 +36,7 @@ Bitmark makes simple tools that empower anyone to assert ownership over their di
 ## Installation
 
 ```javascript
+npm install bitmark-sdk
 ```
 
 ```swift
@@ -52,6 +53,7 @@ go get github.com/aws/bitmark-sdk-go
 Bitmark packages the SDK library for varies of languages. To install it, you can run the command.
 
 ```javascript
+const sdk = require('bitmark-sdk');
 ```
 
 ```swift
@@ -76,6 +78,15 @@ Before you start using it, you need to register an account from Bitmark Inc to g
 ### Configuration
 
 ```javascript
+const sdk = require('bitmark-sdk');
+
+const config = {
+  API_token: "api-token",
+  network: "testnet"
+};
+
+sdk.init(config);
+
 ```
 
 ```swift
