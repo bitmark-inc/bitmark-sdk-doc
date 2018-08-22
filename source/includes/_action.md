@@ -20,6 +20,27 @@ let assetId = try Asset.register(params)
 ```
 
 ```java
+Map<String, String> metadata = new HashMap<>(){{
+	put("desc", "sdk_example");
+}};
+final RegistrationParams params = new RegistrationParams("asset_name", metadata);
+final File file = new File("path/file.ext");
+final Callback<String> callback = new Callback<>(){
+	void onSuccess(String assetId){
+
+	};
+
+	void onError(Throwable Throwable){
+
+	};
+};
+params.generateFingerprint(file, new Callback<String>(){
+	void onCompleted(String fingerprint){
+		params.setFingerprint(fingerprint);
+		params.sign(account);
+		Asset.register(params, callback);
+	};
+});
 ```
 
 ```go
@@ -70,6 +91,18 @@ let bitmarkIds = try Bitmark.issue(params)
 ```
 
 ```java
+final IssuanceParams params = new IssuanceParams(assetId);
+params.setNonce(1,2,3,4,5);
+params.sign(issuer);
+Bitmark.issue(params, new Callback<String>(){
+	void onSuccess(String bitmarkId){
+		// TODO stuff with bitmarkId
+	};
+
+	void onError(Throwable throwable){
+		// TODO stuff with throwable
+	};
+});
 ```
 
 ```go
@@ -105,6 +138,17 @@ let bitmarkIds = try Bitmark.issue(params)
 ```
 
 ```java
+final IssuanceParams params = new IssuanceParams(assetId, 100);
+params.sign(issuer);
+Bitmark.issue(params, new Callback<String>(){
+	void onSuccess(String bitmarkId){
+		// TODO stuff with bitmarkId
+	};
+
+	void onError(Throwable throwable){
+		// TODO stuff with throwable
+	};
+});
 ```
 
 ```go
@@ -151,6 +195,34 @@ let txId = try Bitmark.transfer(params)
 ```
 
 ```java
+final TransferParams params = new TransferParams(receiverAccountNumber, false);
+final Callback<String> callback = new Callback<>(){
+	void onSuccess(String txId){
+		// TODO stuff with txId
+	};
+
+	void onError(Throwable throwable){
+		// TODO stuff with throwable
+	};
+};
+// Asynchronous for get latest txId
+params.getLatestTxId(bitmarkId, new Callback<String>(){
+	void onSuccess(String latestTxId){
+		params.setPrevTxId(latestTxId);
+		params.sign(sender);
+		Bitmark.transfer(params, callback);
+	};
+
+	void onError(Throwable throwable){
+		// TODO stuff with throwable
+	}
+});
+
+// Synchronous 
+params.setPrevTxId(latestTxId);
+params.sign(sender);
+Bitmark.transfer(params, callback);
+
 ```
 
 ```go
@@ -192,6 +264,33 @@ try Bitmark.offer(params)
 ```
 
 ```java
+final OfferParams params = new OfferParams(receiverAccountNumber, true);
+final Callback<Void> callback = new Callback<>(){
+	void onSuccess(Void aVoid){
+		// TODO stuff after success
+	};
+
+	void onError(Throwable throwable){
+		// TODO stuff with throwable
+	};
+};
+// Asynchronous for get latest txId
+params.getLatestTxId(bitmarkId, new Callback<String>(){
+	void onSuccess(String latestTxId){
+		params.setPrevTxId(latestTxId);
+		params.sign(sender);
+		Bitmark.offer(params, callback);
+	};
+
+	void onError(Throwable throwable){
+		// TODO stuff with throwable
+	}
+});
+
+// Synchronous
+params.setPrevTxId(latestTxId);
+params.sign(sender);
+Bitmark.offer(params, callback);
 ```
 
 ```go
@@ -225,6 +324,19 @@ let bitmarks = try Bitmark.List(params)
 ```
 
 ```java
+QueryParams params = QueryParams.builder()
+					.withStatus("offering")
+					.offerTo("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
+					.build();
+Bitmark.list(params, new Callback<List<Bitmark>>(){
+	void onSuccess(List<Bitmark> bitmarks){
+		// TODO stuff with bitmark list
+	};
+
+	void onError(Throwable throwable){
+		// TODO stuff with throwable
+	}
+});
 ```
 
 ```go
@@ -252,6 +364,18 @@ let txid = try Bitmark.response(params)
 ```
 
 ```java
+final TransferResponseParams params = new TransferResponseParams(bitmark, "accept");
+params.sign(receiver);
+Bitmark.respond(params, new Callback<String>(){
+	void onSuccess(String txId){
+		// TODO stuff with txId
+	};
+
+	void onError(Throwable throwable){
+		// TODO stuff with throwable
+	};
+});
+
 ```
 
 ```go
@@ -276,6 +400,17 @@ try Bitmark.response(params)
 ```
 
 ```java
+final TransferResponseParams params = new TransferResponseParams(bitmark, "reject");
+params.sign(receiver);
+Bitmark.respond(params, new Callback<Void>(){
+	void onSuccess(Void aVoid){
+		// TODO stuff
+	};
+
+	void onError(Throwable throwable){
+		// TODO stuff with throwable
+	};
+});
 ```
 
 ```go
@@ -300,6 +435,17 @@ try Bitmark.response(params)
 ```
 
 ```java
+final TransferResponseParams params = new TransferResponseParams(bitmark, "cancel");
+params.sign(receiver);
+Bitmark.respond(params, new Callback<Void>(){
+	void onSuccess(Void aVoid){
+		// TODO stuff
+	};
+
+	void onError(Throwable throwable){
+		// TODO stuff with throwable
+	};
+});
 ```
 
 ```go

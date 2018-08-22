@@ -13,6 +13,7 @@ let account = try Account()
 ```
 
 ```java
+Account account = new Account();
 ```
 
 ```go
@@ -35,6 +36,8 @@ let seed = try account.seed()
 ```
 
 ```java
+byte[] seed = account.getSeed();
+// 5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd
 ```
 
 ```go
@@ -63,6 +66,12 @@ let phrase = try account.recoveryPhrase()
 ```
 
 ```java
+RecoveryPhrase recoveryPhrase = account.getRecoveryPhrase();
+String[] mnemonicWords = account.getRecoveryPhrase().getMnemonicWords();
+// ["acid", "maze", "movie", "turn", "stereo", "over",
+//  "legal", "unhappy", "deny", "early", "scout", "energy",
+//  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
+//  "flower", "knee", "sick", "number", "acoustic", "you"]
 ```
 
 ```go
@@ -90,13 +99,14 @@ account = Account(fromSeed: "5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS
 ```
 
 ```java
+Account account = Account.fromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd");
 ```
 
 ```go
 account := sdk.Account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
 ```
 
-### Recover from seed
+### Recover from seedß
 
 With a seed, you can recover an account.
 
@@ -120,6 +130,9 @@ let account = try Account(fromRecoveryPhrase: [
 ```
 
 ```java
+Account account = Account.fromRecoveryPhrase("acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
+"deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
+"kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you");
 ```
 
 ```go
@@ -145,6 +158,7 @@ let accountNumber = account.accountNumber()
 ```
 
 ```java
+String accountNumber = account.getAccountNumber();
 ```
 
 ```go
@@ -171,6 +185,7 @@ let isValid = Account.isValidAccountNumber(accountNumber)
 ```
 
 ```java
+boolean isValid = Account.isValidAccountNumber(accountNumber);
 ```
 
 ```go
@@ -194,6 +209,11 @@ let (network, pubkey) = try Account.parseAccountNumber(accountNumber)
 ```
 
 ```java
+Account.parseAccountNumber(accountNumber, new Callback<Network, PublicKey> {
+    void onCompleted(Network network, PublicKey publicKey){
+        // TODO stuff
+    };
+});
 ```
 
 ```go
