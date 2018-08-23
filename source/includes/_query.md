@@ -49,7 +49,7 @@
 Use builder to build query options.
 
 ```
-sdk.$Record.List($RecordId, options)
+sdk.$Record.List(options)
 ```
 
 ## Get
