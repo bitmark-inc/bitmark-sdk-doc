@@ -94,14 +94,10 @@ import BitmarkSDK
 ```
 
 ```java
-final HttpClientConfig httpClientConfig = HttpClientConfig.builder()
-                                          .withTimeout(30)
-                                          .withCache(true)
-                                          .build();
 final Configuration config = Configuration.builder()
                             .withApiToken("api-token")
                             .withNetwork(Network.TEST_NET)
-                            .withHttpClientConfig(httpClientConfig)
+                            .withConnectionTimeout(20)
                             .build();
 BitmarkSDK.init(config);
 ```

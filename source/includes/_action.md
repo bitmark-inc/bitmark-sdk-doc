@@ -38,7 +38,7 @@ params.generateFingerprint(file, new Callback<String>(){
 	void onCompleted(String fingerprint){
 		params.setFingerprint(fingerprint);
 		params.sign(account);
-		Asset.register(params, callback);
+		BitmarkSDK.asset().register(params, callback);
 	};
 });
 ```
@@ -94,7 +94,7 @@ let bitmarkIds = try Bitmark.issue(params)
 final IssuanceParams params = new IssuanceParams(assetId);
 params.setNonce(1,2,3,4,5);
 params.sign(issuer);
-Bitmark.issue(params, new Callback<String>(){
+BitmarkSDK.bitmark().issue(params, new Callback<String>(){
 	void onSuccess(String bitmarkId){
 		// TODO stuff with bitmarkId
 	};
@@ -140,7 +140,7 @@ let bitmarkIds = try Bitmark.issue(params)
 ```java
 final IssuanceParams params = new IssuanceParams(assetId, 100);
 params.sign(issuer);
-Bitmark.issue(params, new Callback<String>(){
+BitmarkSDK.bitmark().issue(params, new Callback<String>(){
 	void onSuccess(String bitmarkId){
 		// TODO stuff with bitmarkId
 	};
@@ -210,7 +210,7 @@ params.getLatestTxId(bitmarkId, new Callback<String>(){
 	void onSuccess(String latestTxId){
 		params.setPrevTxId(latestTxId);
 		params.sign(sender);
-		Bitmark.transfer(params, callback);
+		BitmarkSDK.bitmark().transfer(params, callback);
 	};
 
 	void onError(Throwable throwable){
@@ -221,7 +221,7 @@ params.getLatestTxId(bitmarkId, new Callback<String>(){
 // Synchronous 
 params.setPrevTxId(latestTxId);
 params.sign(sender);
-Bitmark.transfer(params, callback);
+BitmarkSDK.bitmark().transfer(params, callback);
 
 ```
 
@@ -279,7 +279,7 @@ params.getLatestTxId(bitmarkId, new Callback<String>(){
 	void onSuccess(String latestTxId){
 		params.setPrevTxId(latestTxId);
 		params.sign(sender);
-		Bitmark.offer(params, callback);
+		BitmarkSDK.bitmark().offer(params, callback);
 	};
 
 	void onError(Throwable throwable){
@@ -290,7 +290,7 @@ params.getLatestTxId(bitmarkId, new Callback<String>(){
 // Synchronous
 params.setPrevTxId(latestTxId);
 params.sign(sender);
-Bitmark.offer(params, callback);
+BitmarkSDK.bitmark().offer(params, callback);
 ```
 
 ```go
@@ -328,7 +328,7 @@ QueryParams params = QueryParams.builder()
 					.withStatus("offering")
 					.offerTo("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
 					.build();
-Bitmark.list(params, new Callback<List<Bitmark>>(){
+BitmarkSDK.bitmark().list(params, new Callback<List<Bitmark>>(){
 	void onSuccess(List<Bitmark> bitmarks){
 		// TODO stuff with bitmark list
 	};
@@ -366,7 +366,7 @@ let txid = try Bitmark.response(params)
 ```java
 final TransferResponseParams params = new TransferResponseParams(bitmark, "accept");
 params.sign(receiver);
-Bitmark.respond(params, new Callback<String>(){
+BitmarkSDK.bitmark().respond(params, new Callback<String>(){
 	void onSuccess(String txId){
 		// TODO stuff with txId
 	};
@@ -402,7 +402,7 @@ try Bitmark.response(params)
 ```java
 final TransferResponseParams params = new TransferResponseParams(bitmark, "reject");
 params.sign(receiver);
-Bitmark.respond(params, new Callback<Void>(){
+BitmarkSDK.bitmark().respond(params, new Callback<Void>(){
 	void onSuccess(Void aVoid){
 		// TODO stuff
 	};
@@ -437,7 +437,7 @@ try Bitmark.response(params)
 ```java
 final TransferResponseParams params = new TransferResponseParams(bitmark, "cancel");
 params.sign(receiver);
-Bitmark.respond(params, new Callback<Void>(){
+BitmarkSDK.bitmark().respond(params, new Callback<Void>(){
 	void onSuccess(Void aVoid){
 		// TODO stuff
 	};

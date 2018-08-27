@@ -36,7 +36,7 @@ let seed = try account.seed()
 ```
 
 ```java
-byte[] seed = account.getSeed();
+Seed seed = account.getSeed();
 // 5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd
 ```
 
