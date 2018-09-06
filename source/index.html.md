@@ -21,8 +21,6 @@ includes:
   - account
   - action
   - query
-  - examples
-
 
 search: true
 ---
