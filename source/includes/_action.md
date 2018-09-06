@@ -166,14 +166,21 @@ In the case that the nonce does not meaningful in issues, developers can use set
 
 # Transfer a bitmark
 
-Bitmark transfer, which is the process of transferring bitmark ownership from one Bitmark account to another. Once a transfer request is sumbitted, it returns you a transaction object which includes information, such as, transaction status and its half-signed record.
+Bitmark transfer, which is the process of transferring bitmark ownership from one Bitmark account to another.
 
-There are two ways to transfer bitmark:
+There are two ways to transfer a bitmark:
 
 - one-signature transfer
 - two-signature transfer
 
-What makes two-signature transfer different from one-signature transfer is that a transfer requires an acceptance from a receiptant.
+One-signature transfer is similar to sending emails, the sender does not get the consent from the receiver before sending a mail.
+
+Two-signature transfer is similar to express delivery, the receiver has the right to accept or reject the delivery of a package.
+The actual transfer won's take effect until the receiver explicitly provides the second signature, a.k.a. countersignature, as the consent.
+
+<aside class="notice">
+A bitmark can be transferred only when its status is settled.
+</aside>
 
 ## 1-sig transfer
 
@@ -234,17 +241,15 @@ params.Sign(sender)
 txId, _ := sdk.Bitmark.Transfer(params)
 ```
 
-A user can submit a bitmark to another without any permission.
+The sender can transfer a bitmark to another account without additional consent.
 
 ## 2-sig transfer
 
 For some scenario, the developer want to get a permission from the receiver before we transfer a property to it. In the case, you will submit a two-signature transfer.
 
-<aside class="notice">
-You are not able to transfer a bitmark in the platform if there is an ongoing transfer for the bitmark.
-</aside>
+![link to Google!](images/2sig_transfer_bitmark_status.png)
 
-> Sender creates a transfer offer
+### Propose a bitmark transfer offer
 
 ```javascript
 let params = Bitmark.newOfferParams(receiverAccountNumber, requireCounterSign = true);
@@ -302,7 +307,11 @@ params.Sign(sender)
 sdk.Bitmark.Offer(params)
 ```
 
-> Receiver needs to query if there is any bitmark transder offer waiting for his signature.
+The current owner of a bitmark can propose a transfer offer for another account if the status of the bitmark is `settled`,
+i.e. either the issue or the transfer transaction of this bitmark is already confirmed on the blockchain.
+The actual ownership transfer won't happen until the receiver accepts the offer.
+
+### Query offering bitmarks
 
 ```javascript
 let builder = QueryBuilder.newListBuilder();
@@ -348,7 +357,10 @@ params := builder.
 bitmarks, _ := sdk.Bitmark.List(params)
 ```
 
-> Receiver wants to accept the bitmark transfer offer
+The receiver needs to query if there is any bitmark transfer offer waiting for the countersignature.
+For the details of query execution, please refer to [Query Bitmark](#bitmark).
+
+### Accept the bitmark transfer offer
 
 ```javascript
 let params = Bitmark.newTransferResponseParams(bitmark, response = RESPONSE_TYPE.ACCEPT);
@@ -378,13 +390,16 @@ BitmarkSDK.bitmark().respond(params, new Callback<String>(){
 
 ```
 
+If the receiver decides to accept the bitmark, the countersignature is generated and make the transfer action take effect.
+The status of the bitmark will change from `offering` to `transferring`. The 
+
 ```go
 params := sdk.Bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Accpet)
 params.Sign(receiver)
 txId, _ := sdk.Bitmark.Respond(params)
 ```
 
-> Receiver wants to reject the bitmark transfer offer
+### Reject the transfer offer
 
 ```javascript
 let params = Bitmark.newTransferResponseParams(bitmark, response = RESPONSE_TYPE.REJECT);
@@ -419,7 +434,10 @@ params.Sign(receiver)
 sdk.Bitmark.Respond(params)
 ```
 
-> Sender wants to cancel the bitmark transfer offer
+The receiver can also reject the bitmark transfer offer.
+The status of the bitmark will reverted to `settled`, and the sender can create a new transfer offer.
+
+### Cancel the transfer offer
 
 ```javascript
 let params = Bitmark.newTransferResponseParams(bitmark, response = RESPONSE_TYPE.CANCEL);
@@ -453,3 +471,6 @@ params := sdk.Bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Cancel)
 params.Sign(receiver)
 sdk.Bitmark.Respond(params)
 ```
+
+If the receiver hasn't responded to the bitmark transfer offer (neither accepted nor rejected), the sender can cancel the offer.
+Similar to the case of the receiver rejectting the offer, the status of the bitmark will be set to `settled` again, and becomes available for the next transfer.
