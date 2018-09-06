@@ -92,6 +92,18 @@ if it.Err() != nil {
 }
 ```
 
+### Query for bitmarks which are offered by the sender
+
+```go
+params := NewQueryParams().OfferedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9")
+```
+
+### Query for bitmarks which are offered for the receiver
+
+```go
+params := NewQueryParams().OfferFor("dzJjGazcRuC7KhgU5o2Y2YV8wGXhBBabGRACa2Uyg4ZkVWwyNu")
+```
+
 ## Tx
 
 | Attribute | Description |
@@ -100,7 +112,8 @@ if it.Err() != nil {
 | previous_id | |
 | bitmark_id | |
 | asset_id | |
-| type | `1-sig`, `2-sig` |
+| asset | |
+| type | `issuance`, `direct_transfer`, `countersigned_transfer` |
 | status | |
 | owner | |
 | status | `pending`, `confirmed` |
@@ -116,7 +129,7 @@ tx, err := tx.Get(txId)
 ### Query for a set of transactions
 
 ```go
-params := NewQueryParams().
+params := tx.NewQueryParams().
     OwnedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", true).
     ReferencedAsset("0e0b4e3bd771811d35a23707ba6197aa1dd5937439a221eaf8e7909309e7b31b6c0e06a1001c261a099abf04c560199db898bc154cf128aa9efa5efd36030c64").
     ReferencedBitmark("58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518").
@@ -132,4 +145,16 @@ for it.Prev() {
 if it.Err() != nil {
     // handler error here
 }
+```
+
+### Query the provenance of a bitmark
+
+```go
+params := tx.NewQueryParams().ReferencedBitmark("58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518")
+```
+
+### Query the transaction history of an account
+
+```go
+params := tx.NewQueryParams().OwnedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", true).
 ```
