@@ -58,20 +58,26 @@ params.JSON()
 assetId, _ := sdk.Asset.Register(params)
 ```
 
-For every unregistered assets, one needs to register it before using it as a reference in an issue(next section).
+The first step to create a digital property is to register assets.
+An asset can any digital object, including files, applications, code, and data.
+
+Each asset is described by name and metadata (optional), and can be uniquely identified by its fingerprint.
+
+If an asset record with the same fingerprint value already exists in the blockchain, the new asset record is rejected from incorporation in the blockchain.
 
 <aside class="notice">
-An asset record will not be confirmed without an confirmed issue point to it. Unconfirmed asset records will be expired three days after they register into the blockchain.
+
+An asset record won't be added to the blockchain without accompanying bitmark issuances (refer to the next section for more info). The "orphaned" asset records will be vanished after 3 days.
+
 </aside>
 
 # Issue bitmarks
 
-Issue is to register a digital asset into the blockchain. An issue needs to link to a specific asset. Before you issue a digital property, you need to create an asset. For each time you issue, it returns a list of bitmark objects.
+This system records ownership claims for digital assets as digital property titles known as bitmarks.
 
-<aside class="notice">
-Either <code>quantity</code> or <code>nonces</code> should be given for issue bitmarks.
-If <code>nonces</code> is given, it will issue by using the nonces you provided and ignore the <code>quantity</code>.
-</aside>
+After the asset is registered, you can issue bitmarks with a permananent reference to the corresponding asset record. 
+
+There can be multiple issues for the same asset, each defined by a different nonce, and each representing a different instance of the property.
 
 ## Create issuances with nonces
 
@@ -116,7 +122,7 @@ params.Sign(issuer)
 bitmarkIds, _ := sdk.Bitmark.Issue(issuances)
 ```
 
-Nonce is a counter value that distinguishes between different issuances for the same asset of the same owner. The nonce can be viewed as edition number. For example, to generate 100 editions for a digital card.
+Nonce is a counter value that distinguishes different issuances for the same asset of the same owner. Typically, these represent “limited editions” of a digital asset, and the nonce can be viewed as edition number.
 
 The combination of nonce, owner and asset should be unique over the blockchain. To issue more bitmarks, developers need to make sure there is no duplicated nonces for issuing within a same owner and asset pair.
 
@@ -162,7 +168,11 @@ params.Sign(issuer)
 bitmarkIds, _ := sdk.Bitmark.Issue(params)
 ```
 
-In the case that the nonce does not meaningful in issues, developers can use set a `quantity` for issuing. In this way, the SDK will generate random nonces matching the quantity automatically and use those nonces for issuing.
+If you simply want to generate authorized copies of digital data on demand, you can set `quantity` instead. The SDK will generate random nonces automatically for issuing.
+
+<aside class="notice">
+Either <code>quantity</code> or <code>nonces</code> should be specified when issuing bitmarks. The setting of <code>nonces</code> takes precendence over <code>quantity</code>.
+</aside>
 
 # Transfer a bitmark
 

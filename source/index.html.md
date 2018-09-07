@@ -27,7 +27,11 @@ search: true
 
 # Overview
 
-Bitmark makes simple tools that empower anyone to assert ownership over their digital lives. Although digital assets increasingly constitute what we create and value most, there is no way for individuals to claim ownership of them. By building a universal digital property system, Bitmark envisions a world in which everyone owns a piece of the digital economy.The Bitmark SDK is a library that enables creation, transfer, and authentication of digital properties in the Bitmark property system. This SDK allows developers to easily build on the core Bitmark infrastructure by reading from and writing to the open-source Bitmark blockchain.
+The Bitmark property system is a universal property system for conferring the same property rights to digital assets that have long existed for physical assets. This system records ownership claims for digital assets as digital property titles known as bitmarks. A digital asset is any digital object, including files, applications, code, and data. Thus, in the digital world:
+
+**digital property = digital asset + bitmark**
+
+The Bitmark SDK enables creation, transfer, and authentication of digital properties in the Bitmark property system. The SDK's simplified interface allows developers to easily build on the core Bitmark infrastructure by reading from and writing to the open-source Bitmark blockchain.
 
 # Getting Started
 
@@ -48,7 +52,7 @@ pod 'BitmarkSDK'
 go get github.com/aws/bitmark-sdk-go
 ```
 
-Bitmark packages the SDK library for varies of languages. To install it, you can run the command.
+To install the SDK, run the following Go command.
 
 ```javascript
 const sdk = require('bitmark-sdk');
@@ -69,7 +73,9 @@ After install the sdk, you can import the library in your code like this.
 
 ## Get your API token
 
-Before you start using it, you need to register an account from Bitmark Inc to get an API token. Please contact our [support](mailto:support@bitmark.com).
+The API token is required to authenticate your requests to the Bitmark API.
+
+Please contact our [support](mailto:support@bitmark.com) to create your developer account and get the API token.
 
 ## Initialize
 
