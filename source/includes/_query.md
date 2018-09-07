@@ -92,33 +92,27 @@ if it.Err() != nil {
 }
 ```
 
-### Query for bitmarks which are offered by the sender
-
-```go
-params := NewQueryParams().OfferedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9")
-```
-
-### Query for bitmarks which are offered for the receiver
-
-```go
-params := NewQueryParams().OfferFor("dzJjGazcRuC7KhgU5o2Y2YV8wGXhBBabGRACa2Uyg4ZkVWwyNu")
-```
-
 ## Tx
 
 | Attribute | Description |
 | --------- | ----------- |
 | id | |
-| previous_id | |
-| bitmark_id | |
+| bitmark_id | Links to the bitmark which this tx is applied to |
 | asset_id | |
 | asset | |
-| type | `issuance`, `direct_transfer`, `countersigned_transfer` |
-| status | |
+| type | Possible values: `issuance`, `direct_transfer`, `countersigned_transfer` |
 | owner | |
-| status | `pending`, `confirmed` |
+| status | Possible values: `pending`, `confirmed` |
 | block_number | |
-| created_at | |
+
+A new tx record is generated implicitly when there is an update to the bitmark ownership.
+
+There are 3 types of txs:
+
+- `issuance`: created when [new bitmarks are issued](## Issue bitmarks)
+- `direct_transfer`: created when [a bitmark is transferred directly](## 1-sig transfer)
+- `countersigned_transfer`: created when [a bitmark transfer offer is accepted](### Accept the bitmark transfer offer)
+
 
 ### Query for a specific transaction
 
@@ -150,11 +144,13 @@ if it.Err() != nil {
 ### Query the provenance of a bitmark
 
 ```go
-params := tx.NewQueryParams().ReferencedBitmark("58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518")
+params := tx.NewQueryParams().
+    ReferencedBitmark("58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518")
 ```
 
 ### Query the transaction history of an account
 
 ```go
-params := tx.NewQueryParams().OwnedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", true).
+params := tx.NewQueryParams().
+    OwnedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", true)
 ```
