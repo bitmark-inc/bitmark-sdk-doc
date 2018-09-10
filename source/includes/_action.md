@@ -44,13 +44,13 @@ params.generateFingerprint(file, new Callback<String>(){
 ```
 
 ```go
-params := sdk.Asset.NewRegistrationParams(
-    "asset_name",
-    map[string]string{"desc": "sdk example"},
+params, _ := asset.NewRegistrationParams(
+	"name", // asset name
+	map[string]string{"k1": "v1", "k2": "v2"}, // asset metadata
 )
 
-file, _ := os.Open("path/file.ext")
-params.SetFingerprint(file)
+dat, _ := ioutil.ReadFile("/tmp/dat")
+params.SetFingerprint(dat) // calculate the fingerprint
 
 params.Sign(account)
 params.JSON()
@@ -112,14 +112,14 @@ BitmarkSDK.bitmark().issue(params, new Callback<String>(){
 ```
 
 ```go
-params := sdk.Bitmark.NewIssuanceParams(
-    assetId,
-    sdk.Bitmark.QuantityOptions{
-        Nonces: []int{1, 2, 3, ..., 100},
-    })
-params.Sign(issuer)
-
-bitmarkIds, _ := sdk.Bitmark.Issue(issuances)
+params := bitmark.NewIssuanceParams(
+	assetId,
+	bitmark.QuantityOptions{
+		Nonces: []uint64{uint64(1), uint64(2), uint64(3)},
+	},
+)
+params.Sign(sender)
+bitmarkIds, err := bitmark.Issue(params) // returns three bitmark IDs
 ```
 
 Nonce is a counter value that distinguishes different issuances for the same asset of the same owner. Typically, these represent “limited editions” of a digital asset, and the nonce can be viewed as edition number.
@@ -158,14 +158,14 @@ BitmarkSDK.bitmark().issue(params, new Callback<String>(){
 ```
 
 ```go
-params := sdk.Bitmark.NewIssuanceParams(
-    assetId,
-    sdk.Bitmark.QuantityOptions{
-        Quantity: 100,
-    }))
-params.Sign(issuer)
-
-bitmarkIds, _ := sdk.Bitmark.Issue(params)
+params := bitmark.NewIssuanceParams(
+	assetId,
+	bitmark.QuantityOptions{
+		Quantity: 3,
+	},
+)
+params.Sign(sender)
+bitmarkIds, _ := bitmark.Issue(params) // returns three bitmark IDs
 ```
 
 If you simply want to generate authorized copies of digital data on demand, you can set `quantity` instead. The SDK will generate random nonces automatically for issuing.
@@ -243,12 +243,14 @@ BitmarkSDK.bitmark().transfer(params, callback);
 ```
 
 ```go
-params := sdk.Bitmark.NewTransferParams(receiverAccountNumber, false)
-params.FromBitmark() // asynchrous, just to check the head_id
-// params.FromTx() // or synchrous
-params.Sign(sender)
+params := bitmark.NewTransferParams("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9") // set receiver's account number
+params.FromBitmark("71131367bc56628bb2eee15da274e466f2ae1533c192d60c9eeef6484b1117e3") // specify which bitmark to be transferred
 
-txId, _ := sdk.Bitmark.Transfer(params)
+// In addition to specifying bitmark directly, you can also specify the latest tx ID of this bitmark
+// params.FromLatestTx("0374d3cd9a901d0c3d084c0e1d57b2c29331eafbbd183fa4fabb40eae331a3d7")
+
+params.Sign(sender)
+txId, _ := bitmark.Transfer(params)
 ```
 
 The sender can transfer a bitmark to another account without additional consent.

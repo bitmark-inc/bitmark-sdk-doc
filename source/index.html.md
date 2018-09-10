@@ -107,7 +107,7 @@ BitmarkSDK.init(config);
 ```
 
 ```go
-import "github.com/bitmark/bitmark-inc/bitmark-sdk-go"
+import sdk "github.com/bitmark/bitmark-inc/bitmark-sdk-go"
 
 func main() {
   // Go to https://github.com/bitmark-inc/bitmark-sdk-go/config.go for details.
