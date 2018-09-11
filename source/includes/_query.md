@@ -66,7 +66,7 @@ if it.Err() != nil {
 ### Query for a specific bitmark
 
 ```go
-bitmark, err := bitmark.Get(bitmarkId)
+bitmark, err := bitmark.Get(bitmarkId, false)
 ```
 
 ### Query for a set of bitmarks
@@ -100,24 +100,16 @@ if it.Err() != nil {
 | bitmark_id | Links to the bitmark which this tx is applied to |
 | asset_id | |
 | asset | |
-| type | Possible values: `issuance`, `direct_transfer`, `countersigned_transfer` |
 | owner | |
 | status | Possible values: `pending`, `confirmed` |
 | block_number | |
 
-A new tx record is generated implicitly when there is an update to the bitmark ownership.
-
-There are 3 types of txs:
-
-- `issuance`: created when [new bitmarks are issued](## Issue bitmarks)
-- `direct_transfer`: created when [a bitmark is transferred directly](## 1-sig transfer)
-- `countersigned_transfer`: created when [a bitmark transfer offer is accepted](### Accept the bitmark transfer offer)
-
+A new tx record is generated accordingly when there is an update to the bitmark ownership.
 
 ### Query for a specific transaction
 
 ```go
-tx, err := tx.Get(txId)
+tx, err := tx.Get(txId, true)
 ```
 
 ### Query for a set of transactions

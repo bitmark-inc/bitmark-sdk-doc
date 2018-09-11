@@ -17,7 +17,7 @@ Account account = new Account();
 ```
 
 ```go
-account := sdk.Account.New()
+account, _ := account.New()
 ```
 
 ## Export an account
@@ -103,7 +103,7 @@ Account account = Account.fromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24Up
 ```
 
 ```go
-account := sdk.Account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
+account := account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
 ```
 
 ### Recover from seedß
@@ -136,7 +136,7 @@ Account account = Account.fromRecoveryPhrase("acid", "maze", "movie", "turn", "s
 ```
 
 ```go
-account := sdk.Account.FromRecoveryPhrase([]string{
+account := account.FromRecoveryPhrase([]string{
     "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
     "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
     "kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you",
@@ -217,7 +217,7 @@ Account.parseAccountNumber(accountNumber, new Callback<Network, PublicKey> {
 ```
 
 ```go
-network, pubkey := sdk.Account.ParseAccountNumber(accountNumber)
+network, pubkey, _ := account.ParseAccountNumber(accountNumber)
 ```
 
 The function parses an account number and returns its network and public key.
