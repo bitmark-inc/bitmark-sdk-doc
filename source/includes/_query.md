@@ -4,14 +4,14 @@
 
 | Attribute | Description |
 | --------- | ----------- |
-| id | |
-| name | |
-| metadata | |
-| fingerprint | |
-| registrant | |
-| status | `pending`, `confirmed` |
-| block_number | |
-| created_at | time |
+| id | The asset ID |
+| name | The asset name |
+| metadata | The asset metadata, described by key-value paris |
+| fingerprint | The hash value of the asset content, which serves as the unique identifier for the asset record in the blockchain |
+| registrant | The account registering the asset |
+| status | Possible values: `pending`, `confirmed` |
+| block_number | The block which the asset record is added to |
+| created_at | When the asset status becomes `confirmed` |
 
 ### Query for a specific asset
 
@@ -41,27 +41,28 @@ if it.Err() != nil {
 
 | Attribute | Description |
 | --------- | ----------- |
-| id | |
-| asset_id | |
-| asset | |
-| latest_tx_id | |
-| issuer | |
-| owner | |
+| id | The bitmark ID |
+| asset_id | The asset ID |
+| asset | The asset record |
+| latest_tx_id | The latest tx ID |
+| issuer | The account issuing the bitmark |
+| owner | The account currently owningthe bitmark |
 | offer | See the offer attributes below. |
 | status | Possible values: `issuing`, `transferring`, `offering`, `settled` |
-| block_number | |
-| created_at | |
-| updated_at | |
+| block_number | ??? |
+| created_at | When the bitmark is issued |
+| updated_at | The last time when the bitmark is transferred |
 
 ### Offer
 
 | Attribute | Description |
 | --------- | ----------- |
-| id | |
-| from | |
-| to | |
-| message | |
-| extra_info | |
+| id | The offer ID |
+| from | Represents the account creating the offer |
+| to | Represents the account which can accept/reject the bitmark |
+| record | The half-signed transfer tx |
+| extra_info | Attached JSON message for indicating the details of this offer |
+| created_at | The create time of the offer |
 
 ### Query for a specific bitmark
 
@@ -75,8 +76,8 @@ bitmark, err := bitmark.Get(bitmarkId, false)
 params := NewQueryParams().
     IssuedBy("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog").
     OwnedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", true).
-    OfferFor("dzJjGazcRuC7KhgU5o2Y2YV8wGXhBBabGRACa2Uyg4ZkVWwyNu").
-    OfferedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9").
+    OfferTo("dzJjGazcRuC7KhgU5o2Y2YV8wGXhBBabGRACa2Uyg4ZkVWwyNu").
+    OfferFrom("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9").
     ReferencedAsset("1f21148a273b5e63773ceee976a84bcd014d88ac2c18a29cac4442120b430e158386b0ad90515c69e7d1fd6df8f3d523e3550741e88d0d04798627a57b0006c9").
     LoadAsset(true).
     Limit(10)
@@ -96,13 +97,13 @@ if it.Err() != nil {
 
 | Attribute | Description |
 | --------- | ----------- |
-| id | |
+| id | The tx ID |
 | bitmark_id | Links to the bitmark which this tx is applied to |
-| asset_id | |
-| asset | |
-| owner | |
+| asset_id | The asset ID |
+| asset | The asset record |
+| owner | The account owning the bitmark by this transaction |
 | status | Possible values: `pending`, `confirmed` |
-| block_number | |
+| block_number | The block which the tx record is added to |
 
 A new tx record is generated accordingly when there is an update to the bitmark ownership.
 
