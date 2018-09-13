@@ -10,7 +10,7 @@
 | fingerprint | The hash value of the asset content, which serves as the unique identifier for the asset record in the blockchain |
 | registrant | The account registering the asset |
 | status | Possible values: `pending`, `confirmed` |
-| block_number | The block which the asset record is added to |
+| block_number | The block which incorporates the asset record |
 | created_at | When the asset status becomes `confirmed` |
 
 ### Query for a specific asset
@@ -49,7 +49,7 @@ if it.Err() != nil {
 | owner | The account currently owningthe bitmark |
 | offer | See the offer attributes below. |
 | status | Possible values: `issuing`, `transferring`, `offering`, `settled` |
-| block_number | ??? |
+| block_number | The block which incorporates the latest tx of this bitmark |
 | created_at | When the bitmark is issued |
 | updated_at | The last time when the bitmark is transferred |
 
@@ -101,9 +101,9 @@ if it.Err() != nil {
 | bitmark_id | Links to the bitmark which this tx is applied to |
 | asset_id | The asset ID |
 | asset | The asset record |
-| owner | The account owning the bitmark by this transaction |
+| owner | The account owning the bitmark |
 | status | Possible values: `pending`, `confirmed` |
-| block_number | The block which the tx record is added to |
+| block_number | The block which incorporates the tx record |
 
 A new tx record is generated accordingly when there is an update to the bitmark ownership.
 
