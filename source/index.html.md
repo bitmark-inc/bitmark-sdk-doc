@@ -27,11 +27,11 @@ search: true
 
 # Overview
 
-The Bitmark property system is a universal property system for conferring the same property rights to digital assets that have long existed for physical assets. This system records ownership claims for digital assets as digital property titles known as bitmarks. A digital asset is any digital object, including files, applications, code, and data. Thus, in the digital world:
+The Bitmark property system is an universal property system for conferring the same property rights to digital assets that have long existed for physical assets. This system records ownership claims for digital assets as digital property titles known as bitmarks on the Bitmark public blockchain. A digital asset can be any digital object, including files, applications, code, and data. In the digital world:
 
 **digital property = digital asset + bitmark**
 
-The Bitmark SDK enables creation, transfer, and authentication of digital properties in the Bitmark property system. The SDK's simplified interface allows developers to easily build on the core Bitmark infrastructure by reading from and writing to the open-source Bitmark blockchain.
+The Bitmark SDK enables creation, transfer, and authentication of digital properties in the Bitmark property system. The SDK's simplified interface allows developers to easily build on the core Bitmark infrastructure by reading from and writing to the Bitmark blockchain.
 
 # Getting Started
 
@@ -51,25 +51,6 @@ pod 'BitmarkSDK'
 ```go
 go get github.com/aws/bitmark-sdk-go
 ```
-
-To install the SDK, run the following Go command.
-
-```javascript
-const sdk = require('bitmark-sdk');
-```
-
-```swift
-import BitmarkSDK
-```
-
-```java
-```
-
-```go
-import "github.com/bitmark-inc/bitmark-sdk-go"
-```
-
-After install the sdk, you can import the library in your code like this.
 
 ## Get your API token
 

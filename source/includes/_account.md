@@ -1,6 +1,8 @@
 # Account
 
-Account is a fundenmantal unit in the bitmark blockchain system. There are multiple ways to create an account object.
+Within the Bitmark system, an account represents any entity capable of creating and owning property, whether individuals, insitutions, or organizations. 
+
+An account incorporates the public-private keypair and the private key is required to [digitally sign](https://en.wikipedia.org/wiki/Digital_signature) any Bitmark blockchain record, including asset records, issue records, and transfer records.
 
 ## Create an account
 
@@ -20,10 +22,43 @@ Account account = new Account();
 account, _ := account.New()
 ```
 
+## Get the account number
+
+```javascript
+let accountNumber = account.getAccountNumber();
+// ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
+```
+
+```swift
+let accountNumber = account.accountNumber()
+// ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
+```
+
+```java
+String accountNumber = account.getAccountNumber();
+```
+
+```go
+accountNumber := account.AccountNumber()
+// ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
+```
+
+The account number of an account serves as a pseudonymous identifier within the Bitmark blockchain, which can represent:
+
+- **registrant** of an asset
+- **owner** of a bitmark
+- **sender** of a bitmark transfer offer
+- **receiver** of a bitmark transfer offer
+
 ## Export an account
 
-We provide two formats for exporting an account: *seed* and *recovery phrase*, both of which store all the information needed to recover a Bitmark account.
+We provide two formats for exporting an account: **seed** and **recovery phrase**, both of which store all the required information to instantiate an account.
 
+<aside class="warning">
+Because seed and recovery phrase is the "ticket" that allows someone to control properties under an account, it is important they are kept secure.
+</aside>
+
+### Seed
 
 ```javascript
 let seed = account.getSeed();
@@ -45,9 +80,9 @@ seed := account.Seed()
 // 5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd
 ```
 
-The *seed* is designed for services which act as custodians of Bitmark accounts. By mapping user ID and bitmark account seed, you can manage bitmarks and assets on behalf of your application users. Make sure seeds are stored in a secure way.
+The seed is the more compact format of an exported account for your program to re-instantiate an account.
 
-Back up an account from its seed is a straight forward way. It outputs bytes of an account seed. You can save it in your storage, such as, a database. And use it to recover an account for a later on operation.
+### Recovery Phrase
 
 ```javascript
 let recoveryPhrase = account.getRecoveryPhrase();
@@ -82,13 +117,13 @@ phrase := account.RecoveryPhrase()
 //  "flower", "knee", "sick", "number", "acoustic", "you"]
 ```
 
-The *recovery phrase*, which consists of 24 mnemonic words, is designed for individuals to backup their accounts. The recovery phrase should be handed over to the user after the account is created.
-
-The concept of this recovery phrase comes from [BIP39 - Mnemonic code for generating deterministic keys](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki). With these phrase, people can easily written down the human readable words instead of random strings which is difficult to understand.
+The recovery phrase, which consists of 24 [mnemonic words](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki), is superior for human interaction compared to the handling of seed. If you don't plan to custody user's private key, make sure you present the recovery phrase to your user.
 
 ## Import an account
 
 On the contrast, there are functions for you to recover the accounts.
+
+### Recover from seed
 
 ```javascript
 let account = Account.fromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd");
@@ -106,12 +141,7 @@ Account account = Account.fromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24Up
 account := account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
 ```
 
-### Recover from seedß
-
-With a seed, you can recover an account.
-
 ### Recover from phrase
-
 
 ```javascript
 let account = Account.fromRecoveryPhrase([
@@ -143,36 +173,9 @@ account := account.FromRecoveryPhrase([]string{
 })
 ```
 
-With a phrase, you can recover an account.
-
-## Get the account number
-
-```javascript
-let accountNumber = account.getAccountNumber();
-// ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
-```
-
-```swift
-let accountNumber = account.accountNumber()
-// ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
-```
-
-```java
-String accountNumber = account.getAccountNumber();
-```
-
-```go
-accountNumber := account.AccountNumber()
-// ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
-```
-
-The account number of an account serves as a pseudonymous identifier within the Bitmark blockchain.
-
-Account number is a combination of arbitrary strings. In the real life, you deposit to and withdraw from a bank account. With the bitmark account number, people can check the ownership, transfer from and transfer to that account.
-
 ## Account utility functions
 
-In the account library, there are some helper functions.
+Here are some are some helper functions.
 
 ### Validate account number
 
@@ -189,10 +192,11 @@ boolean isValid = Account.isValidAccountNumber(accountNumber);
 ```
 
 ```go
-valid := sdk.Account.IsValidAccountNumber(accountNumber)
+valid := account.IsValidAccountNumber(accountNumber)
 ```
 
-The function chech whether a given account number is valid in currently runtime environment. It returns `true` / `false`.
+The function returns a boolean to indicate whether a given account number is valid in current runtime environment, i.e.,
+the format is correct and its network matches to the network specified in the SDK config during initialization.
 
 ### Parse information from an account number
 

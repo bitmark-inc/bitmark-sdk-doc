@@ -55,7 +55,7 @@ params.SetFingerprint(dat) // calculate the fingerprint
 params.Sign(account)
 params.JSON()
 
-assetId, _ := sdk.Asset.Register(params)
+assetId, _ := asset.Register(p)
 ```
 
 The first step to create a digital property is to register assets.
@@ -180,19 +180,19 @@ Bitmark transfer, which is the process of transferring bitmark ownership from on
 
 There are two ways to transfer a bitmark:
 
-- one-signature transfer
-- two-signature transfer
+- **direct transfer** (1-sig transfer): only requires sender's signature
+- **countersigned transfer** (2-sig transfer):requires both sender's and receiver's signature
 
-One-signature transfer is similar to sending emails, the sender does not get the consent from the receiver before sending a mail.
+Direct transfer is similar to sending emails, the sender does not get the consent from the receiver before sending a mail.
 
-Two-signature transfer is similar to express delivery, the receiver has the right to accept or reject the delivery of a package.
-The actual transfer won's take effect until the receiver explicitly provides the second signature, a.k.a. countersignature, as the consent.
+Countersigned transfer is similar to express delivery, the receiver has the right to accept or reject the delivery of a package.
+The actual transfer won't take effect until the receiver explicitly provides the second signature, a.k.a. countersignature, as the consent.
 
 <aside class="notice">
 A bitmark can be transferred only when its status is settled.
 </aside>
 
-## 1-sig transfer
+## Direct transfer
 
 ```javascript
 let params = Bitmark.newTransferParams(receiverAccountNumber, requireCounterSign = false);
@@ -255,11 +255,9 @@ txId, _ := bitmark.Transfer(params)
 
 The sender can transfer a bitmark to another account without additional consent.
 
-## 2-sig transfer
+## Countersigned transfer
 
 For some scenario, the developer want to get a permission from the receiver before we transfer a property to it. In the case, you will submit a two-signature transfer.
-
-![link to Google!](images/2sig_transfer_bitmark_status.png)
 
 ### Propose a bitmark transfer offer
 
@@ -361,12 +359,16 @@ BitmarkSDK.bitmark().list(params, new Callback<List<Bitmark>>(){
 ```
 
 ```go
-builder := sdk.NewBitmarkQueryBuilder()
-params := builder.
-    Status("offering").
-    OfferTo("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog").
-    Build()
-bitmarks, _ := sdk.Bitmark.List(params)
+builder := bitmark.NewQueryParamsBuilder().
+		OfferFrom("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog").
+		Limit(10)
+
+it := bitmark.NewIterator(builder)
+for it.Before() {
+	for _, b := range it.Values() {
+		// iterate over each offering bitmark
+	}
+}
 ```
 
 The receiver needs to query if there is any bitmark transfer offer waiting for the countersignature.

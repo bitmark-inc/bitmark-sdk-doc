@@ -48,10 +48,12 @@ if it.Err() != nil {
 | issuer | The account issuing the bitmark |
 | owner | The account currently owningthe bitmark |
 | offer | See the offer attributes below. |
-| status | Possible values: `issuing`, `transferring`, `offering`, `settled` |
+| status | Possible values: `issuing`, `transferring`, `offering`, `settled` See the following diagram for definition. |
 | block_number | The block which incorporates the latest tx of this bitmark |
 | created_at | When the bitmark is issued |
 | updated_at | The last time when the bitmark is transferred |
+
+![Bitmark status diagram](images/bitmark_status.png)
 
 ### Offer
 
