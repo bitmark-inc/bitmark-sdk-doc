@@ -19,7 +19,7 @@ Account account = new Account();
 ```
 
 ```go
-account, _ := account.New()
+account, err := account.New()
 ```
 
 ## Get the account number
@@ -221,7 +221,7 @@ Account.parseAccountNumber(accountNumber, new Callback<Network, PublicKey> {
 ```
 
 ```go
-network, pubkey, _ := account.ParseAccountNumber(accountNumber)
+network, pubkey, err := account.ParseAccountNumber(accountNumber)
 ```
 
 The function parses an account number and returns its network and public key.

@@ -44,18 +44,18 @@ params.generateFingerprint(file, new Callback<String>(){
 ```
 
 ```go
-params, _ := asset.NewRegistrationParams(
+params, err := asset.NewRegistrationParams(
 	"name", // asset name
 	map[string]string{"k1": "v1", "k2": "v2"}, // asset metadata
 )
 
-dat, _ := ioutil.ReadFile("/tmp/dat")
+dat, err := ioutil.ReadFile("/tmp/dat")
 params.SetFingerprint(dat) // calculate the fingerprint
 
 params.Sign(account)
 params.JSON()
 
-assetId, _ := asset.Register(p)
+assetId, err := asset.Register(p)
 ```
 
 The first step to create a digital property is to register assets.
@@ -165,7 +165,7 @@ params := bitmark.NewIssuanceParams(
 	},
 )
 params.Sign(sender)
-bitmarkIds, _ := bitmark.Issue(params) // returns three bitmark IDs
+bitmarkIds, err := bitmark.Issue(params) // returns three bitmark IDs
 ```
 
 If you simply want to generate authorized copies of digital data on demand, you can set `quantity` instead. The SDK will generate random nonces automatically for issuing.
@@ -250,7 +250,7 @@ params.FromBitmark("71131367bc56628bb2eee15da274e466f2ae1533c192d60c9eeef6484b11
 // params.FromLatestTx("0374d3cd9a901d0c3d084c0e1d57b2c29331eafbbd183fa4fabb40eae331a3d7")
 
 params.Sign(sender)
-txId, _ := bitmark.Transfer(params)
+txId, err := bitmark.Transfer(params)
 ```
 
 The sender can transfer a bitmark to another account without additional consent.
@@ -410,7 +410,7 @@ The status of the bitmark will change from `offering` to `transferring`. The
 ```go
 params := sdk.Bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Accpet)
 params.Sign(receiver)
-txId, _ := sdk.Bitmark.Respond(params)
+txId, err := sdk.Bitmark.Respond(params)
 ```
 
 ### Reject the transfer offer
