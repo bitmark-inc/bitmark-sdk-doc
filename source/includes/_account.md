@@ -7,7 +7,12 @@ An account incorporates the public-private keypair and the private key is requir
 ## Create an account
 
 ```javascript
-let account = sdk.Account();
+let account = new sdk.Account();
+
+// or
+const Account = sdk.Account;
+let account = new Account();
+
 ```
 
 ```swift

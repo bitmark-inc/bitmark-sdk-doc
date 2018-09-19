@@ -2,10 +2,10 @@
 
 ```javascript
 let params = Asset.newRegistrationParams(assetName, metadata);
-params.setFingerprint(filePath);
+await params.setFingerprint(filePath);
 params.sign(account);
 
-let assetId = Asset.register(params);
+let response = await Asset.register(params);
 ```
 
 ```swift
@@ -83,7 +83,7 @@ There can be multiple issues for the same asset, each defined by a different non
 let params = Bitmark.newIssuanceParams(assetId, nonces = [1, 2, ..., 100]);
 params.sign(account);
 
-let bitmarkIds = Bitmark.issue(params);
+let response = await Bitmark.issue(params);
 ```
 
 ```swift
@@ -198,11 +198,12 @@ A bitmark can be transferred only when its status is settled.
 ## Direct transfer
 
 ```javascript
-let params = Bitmark.newTransferParams(receiverAccountNumber, requireCounterSign = false);
-params.from(bitmarkId);
+let params = Bitmark.newTransferParams(receiverAccountNumber);
+await params.fromBitmark(bitmarkId); // asynchrous, just to check the head_id
+// params.fromTxId(lastestTxId); // or synchrous
 params.sign(account);
 
-let txId = Bitmark.transfer(params);
+let response = await Bitmark.transfer(params);
 ```
 
 ```swift
@@ -251,11 +252,11 @@ For some scenario, the developer want to get a permission from the receiver befo
 ### Propose a bitmark transfer offer
 
 ```javascript
-let params = Bitmark.newOfferParams(receiverAccountNumber, requireCounterSign = true);
-params.from(bitmarkId);
+let params = Bitmark.newTransferOfferParams(receiverAccountNumber);
+await params.fromBitmark(bitmarkId); // asynchrous, just to check the head_id
+// params.fromTxId(lastestTxId); // or synchrous
 params.sign(senderAccount);
-
-Bitmark.offer(params);
+let response = await Bitmark.offer(params);
 ```
 
 ```swift
@@ -300,13 +301,12 @@ The actual ownership transfer won't happen until the receiver accepts the offer.
 ### Query offering bitmarks
 
 ```javascript
-let builder = QueryBuilder.newListBuilder();
-let params = builder
-    .status("offering")
-    .offerTo("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
+let bitmarkQueryParams = Bitmark.newBitmarkQueryBuilder()
+    .offerFrom("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
+    .limit(10)
     .build();
 
-let bitmarks = Bitmark.List(params);
+let response = await Bitmark.list(bitmarkQueryParams);
 ```
 
 ```swift
@@ -352,10 +352,12 @@ For the details of query execution, please refer to [Query Bitmark](#bitmark).
 ### Accept the bitmark transfer offer
 
 ```javascript
-let params = Bitmark.newTransferResponseParams(bitmark, response = RESPONSE_TYPE.ACCEPT);
-params.sign(receiverAccount);
+let transferOfferResponseParams = Bitmark.newTransferResponseParams(BITMARK_CONSTANTS.TRANSFER_OFFER_RESPONSE_TYPES.ACCEPT);
+await transferOfferResponseParams.fromBitmark(bitmark.id);  // asynchrous, just to get offer from Bitmark
+// transferOfferResponseParams.fromOffer(offer) // or synchrous
+transferOfferResponseParams.sign(receiverAccount);
 
-let txid = Bitmark.response(params);
+response = await Bitmark.response(transferOfferResponseParams, receiverAccount);
 ```
 
 ```swift
@@ -392,10 +394,12 @@ txId, err := sdk.Bitmark.Respond(params)
 ### Reject the transfer offer
 
 ```javascript
-let params = Bitmark.newTransferResponseParams(bitmark, response = RESPONSE_TYPE.REJECT);
-params.sign(receiverAccount);
+let transferOfferResponseParams = Bitmark.newTransferResponseParams(BITMARK_CONSTANTS.TRANSFER_OFFER_RESPONSE_TYPES.REJECT);
+await transferOfferResponseParams.fromBitmark(bitmark.id);  // asynchrous, just to get offer from Bitmark
+// transferOfferResponseParams.fromOffer(offer) // or synchrous
+transferOfferResponseParams.sign(receiverAccount);
 
-Bitmark.response(params);
+response = await Bitmark.response(transferOfferResponseParams, receiverAccount);
 ```
 
 ```swift
@@ -432,10 +436,11 @@ The status of the bitmark will reverted to `settled`, and the sender can create 
 ### Cancel the transfer offer
 
 ```javascript
-let params = Bitmark.newTransferResponseParams(bitmark, response = RESPONSE_TYPE.CANCEL);
-params.sign(senderAccount);
+let transferOfferResponseParams = Bitmark.newTransferResponseParams(BITMARK_CONSTANTS.TRANSFER_OFFER_RESPONSE_TYPES.CANCEL);
+await transferOfferResponseParams.fromBitmark(bitmark.id);  // asynchrous, just to get offer from Bitmark
+// transferOfferResponseParams.fromOffer(offer) // or synchrous
 
-Bitmark.response(params);
+response = await Bitmark.response(transferOfferResponseParams, senderAccount);
 ```
 
 ```swift

@@ -14,6 +14,9 @@
 | created_at | When the asset status becomes `confirmed` |
 
 ### Query for a specific asset
+````javascript
+let response = await Asset.get(assetId);
+````
 
 ```go
 asset, err := asset.Get(assetId)
@@ -34,6 +37,14 @@ Asset.get(assetId, new Callback1<AssetRecord>() {
 ```
 
 ### Query for a set of assets
+````javascript
+let assetQueryParams = Asset.newAssetQueryBuilder()
+    .registeredBy("ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+    .limit(10)
+    .build();
+
+let response = await Asset.list(assetQueryParams);
+````
 
 ```go
 params := asset.NewQueryParams().
@@ -96,12 +107,28 @@ Asset.list(builder, new Callback1<List<AssetRecord>>() {
 | created_at | The create time of the offer |
 
 ### Query for a specific bitmark
+````javascript
+let response = await Bitmark.get(bitmarkId, false); // false: not include asset, true: include asset 
+````
 
 ```go
 bitmark, err := bitmark.Get(bitmarkId, false)
 ```
 
 ### Query for a set of bitmarks
+````javascript
+let bitmarkQueryParams = Bitmark.newBitmarkQueryBuilder()
+    .ownedBy("ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+    .issuedBy("ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+    .referencedAsset("0e0b4e3bd771811d35a23707ba6197aa1dd5937439a221eaf8e7909309e7b31b6c0e06a1001c261a099abf04c560199db898bc154cf128aa9efa5efd36030c64")
+    .offerFrom("ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+    .offerTo("ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+    .loadAsset(true)
+    .limit(10)
+    .build();
+
+let response = await Bitmark.list(bitmarkQueryParams);
+````
 
 ```go
 params := NewQueryParams().
@@ -161,6 +188,9 @@ Bitmark.list(builder, new Callback1<GetBitmarksResponse>() {
 A new tx record is generated accordingly when there is an update to the bitmark ownership.
 
 ### Query for a specific transaction
+````javascript
+let txResponse = await Transaction.get(txId);
+````
 
 ```go
 tx, err := tx.Get(txId, true)
@@ -181,6 +211,17 @@ Transaction.get(txId, new Callback1<GetTransactionResponse>() {
 ```
 
 ### Query for a set of transactions
+````javascript
+let transactionQueryParams = Transaction.newTransactionQueryBuilder()
+    .ownedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9")
+    .referencedAsset("1f21148a273b5e63773ceee976a84bcd014d88ac2c18a29cac4442120b430e158386b0ad90515c69e7d1fd6df8f3d523e3550741e88d0d04798627a57b0006c9")
+    .referencedBitmark("c8e021c1a093c32909e4d29b4624f8a5443e349a597314b7c9527ce310749121")
+    .loadAsset(true)
+    .limit(10)
+    .build();
+
+let response = await Transaction.list(transactionQueryParams);
+````
 
 ```go
 params := tx.NewQueryParams().
@@ -222,6 +263,13 @@ Transaction.list(builder, new Callback1<GetTransactionsResponse>() {
 ```
 
 ### Query the provenance of a bitmark
+````javascript
+let transactionQueryParams = Transaction.newTransactionQueryBuilder()
+    .referencedBitmark("c8e021c1a093c32909e4d29b4624f8a5443e349a597314b7c9527ce310749121")
+    .build();
+
+let response = await Transaction.list(transactionQueryParams);
+````
 
 ```go
 params := tx.NewQueryParams().
@@ -245,7 +293,13 @@ Transaction.list(builder, new Callback1<GetTransactionsResponse>() {
 ```
 
 ### Query the transaction history of an account
+````javascript
+let transactionQueryParams = Transaction.newTransactionQueryBuilder()
+    .ownedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9")
+    .build();
 
+let response = await Transaction.list(transactionQueryParams);
+````
 ```go
 params := tx.NewQueryParams().
     OwnedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", true)
