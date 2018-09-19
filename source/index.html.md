@@ -79,12 +79,13 @@ import BitmarkSDK
 ```
 
 ```java
-final Configuration config = Configuration.builder()
-                            .withApiToken("api-token")
-                            .withNetwork(Network.TEST_NET)
-                            .withConnectionTimeout(20)
-                            .build();
-BitmarkSDK.init(config);
+final GlobalConfiguration.Builder builder = GlobalConfiguration.builder().withApiToken("bmk-lljpzkhqdkzmblhg").withNetwork(Network.LIVE_NET);
+BitmarkSDK.init(builder);
+
+```
+
+```java
+BitmarkSDK.init("bmk-lljpzkhqdkzmblhg");
 ```
 
 ```go

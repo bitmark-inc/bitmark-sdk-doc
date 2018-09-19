@@ -19,6 +19,20 @@
 asset, err := asset.Get(assetId)
 ```
 
+```java
+Asset.get(assetId, new Callback1<AssetRecord>() {
+            @Override
+            public void onSuccess(AssetRecord asset) {
+                
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
+```
+
 ### Query for a set of assets
 
 ```go
@@ -35,6 +49,21 @@ for it.Prev() {
 if it.Err() != nil {
     // handler error here
 }
+```
+
+```java
+AssetQueryBuilder builder = new AssetQueryBuilder().limit(limit).registrant(registrant);
+Asset.list(builder, new Callback1<List<AssetRecord>>() {
+            @Override
+            public void onSuccess(List<AssetRecord> assets) {
+                
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
 ```
 
 ## Bitmark
@@ -95,6 +124,28 @@ if it.Err() != nil {
 }
 ```
 
+```java
+BitmarkQueryBuilder builder = new BitmarkQueryBuilder()
+                            .issuedBy("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
+                            .ownedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9")
+                            .offerTo("dzJjGazcRuC7KhgU5o2Y2YV8wGXhBBabGRACa2Uyg4ZkVWwyNu")
+                            .offerFrom("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9")
+                            .referenceAsset("1f21148a273b5e63773ceee976a84bcd014d88ac2c18a29cac4442120b430e158386b0ad90515c69e7d1fd6df8f3d523e3550741e88d0d04798627a57b0006c9")
+                            .loadAsset(true)
+                            .limit(10);
+Bitmark.list(builder, new Callback1<GetBitmarksResponse>() {
+            @Override
+            public void onSuccess(GetBitmarksResponse res) {
+                
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
+```
+
 ## Tx
 
 | Attribute | Description |
@@ -113,6 +164,20 @@ A new tx record is generated accordingly when there is an update to the bitmark 
 
 ```go
 tx, err := tx.Get(txId, true)
+```
+
+```java
+Transaction.get(txId, new Callback1<GetTransactionResponse>() {
+            @Override
+            public void onSuccess(GetTransactionResponse res) {
+                
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
 ```
 
 ### Query for a set of transactions
@@ -134,6 +199,26 @@ for it.Prev() {
 if it.Err() != nil {
     // handler error here
 }
+```
+
+```java
+TransactionQueryBuilder builder = new TransactionQueryBuilder()
+                                .owner("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9")
+                                .referenceAsset("0e0b4e3bd771811d35a23707ba6197aa1dd5937439a221eaf8e7909309e7b31b6c0e06a1001c261a099abf04c560199db898bc154cf128aa9efa5efd36030c64")
+                                .referenceBitmark("58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518")
+                                .loadAsset(true)
+                                .limit(10);
+Transaction.list(builder, new Callback1<GetTransactionsResponse>() {
+            @Override
+            public void onSuccess(GetTransactionsResponse res) {
+                
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
 ```
 
 ### Query the provenance of a bitmark

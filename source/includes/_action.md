@@ -21,26 +21,24 @@ let assetId = try Asset.register(params)
 
 ```java
 Map<String, String> metadata = new HashMap<>(){{
+	put("name", "name");
 	put("desc", "sdk_example");
 }};
-final RegistrationParams params = new RegistrationParams("asset_name", metadata);
-final File file = new File("path/file.ext");
-final Callback<String> callback = new Callback<>(){
-	void onSuccess(String assetId){
+Address registrant = account.toAddress();
+RegistrationParams params = new RegistrationParams("asset_name", metadata, registrant);
+params.generateFingerprint(file);
+params.sign(key);
+Asset.register(params, new Callback1<RegistrationResponse>() {
+            @Override
+            public void onSuccess(RegistrationResponse res) {
+                
+            }
 
-	};
+            @Override
+            public void onError(Throwable throwable) {
 
-	void onError(Throwable Throwable){
-
-	};
-};
-params.generateFingerprint(file, new Callback<String>(){
-	void onCompleted(String fingerprint){
-		params.setFingerprint(fingerprint);
-		params.sign(account);
-		BitmarkSDK.asset().register(params, callback);
-	};
-});
+            }
+        });
 ```
 
 ```go
@@ -97,18 +95,20 @@ let bitmarkIds = try Bitmark.issue(params)
 ```
 
 ```java
-final IssuanceParams params = new IssuanceParams(assetId);
-params.setNonce(1,2,3,4,5);
-params.sign(issuer);
-BitmarkSDK.bitmark().issue(params, new Callback<String>(){
-	void onSuccess(String bitmarkId){
-		// TODO stuff with bitmarkId
-	};
+Address owner = account.toAddress();
+IssuanceParams params = new IssuanceParams(assetId, owner, new int[] {1, 2, 3, 4, 5});
+params.sign(ownerKey);
+Bitmark.issue(params, new Callback1<IssueResponse>() {
+            @Override
+            public void onSuccess(IssueResponse res) {
+                
+            }
 
-	void onError(Throwable throwable){
-		// TODO stuff with throwable
-	};
-});
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
 ```
 
 ```go
@@ -144,17 +144,20 @@ let bitmarkIds = try Bitmark.issue(params)
 ```
 
 ```java
-final IssuanceParams params = new IssuanceParams(assetId, 100);
-params.sign(issuer);
-BitmarkSDK.bitmark().issue(params, new Callback<String>(){
-	void onSuccess(String bitmarkId){
-		// TODO stuff with bitmarkId
-	};
+Address owner = account.toAddress();
+IssuanceParams params = new IssuanceParams(assetId, owner, quantity);
+params.sign(ownerKey);
+Bitmark.issue(params, new Callback1<IssueResponse>() {
+            @Override
+            public void onSuccess(IssueResponse res) {
+                
+            }
 
-	void onError(Throwable throwable){
-		// TODO stuff with throwable
-	};
-});
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
 ```
 
 ```go
@@ -212,34 +215,20 @@ let txId = try Bitmark.transfer(params)
 ```
 
 ```java
-final TransferParams params = new TransferParams(receiverAccountNumber, false);
-final Callback<String> callback = new Callback<>(){
-	void onSuccess(String txId){
-		// TODO stuff with txId
-	};
+Address receiver = account.toAddress();
+TransferParams params = new TransferParams(receiver, link);
+params.sign(senderKey);
+Bitmark.transfer(params, new Callback1<String>() {
+            @Override
+            public void onSuccess(String txId) {
+                
+            }
 
-	void onError(Throwable throwable){
-		// TODO stuff with throwable
-	};
-};
-// Asynchronous for get latest txId
-params.getLatestTxId(bitmarkId, new Callback<String>(){
-	void onSuccess(String latestTxId){
-		params.setPrevTxId(latestTxId);
-		params.sign(sender);
-		BitmarkSDK.bitmark().transfer(params, callback);
-	};
+            @Override
+            public void onError(Throwable throwable) {
 
-	void onError(Throwable throwable){
-		// TODO stuff with throwable
-	}
-});
-
-// Synchronous 
-params.setPrevTxId(latestTxId);
-params.sign(sender);
-BitmarkSDK.bitmark().transfer(params, callback);
-
+            }
+        });
 ```
 
 ```go
@@ -279,33 +268,20 @@ try Bitmark.offer(params)
 ```
 
 ```java
-final OfferParams params = new OfferParams(receiverAccountNumber, true);
-final Callback<Void> callback = new Callback<>(){
-	void onSuccess(Void aVoid){
-		// TODO stuff after success
-	};
+Address receiver = account.toAddress();
+TransferOfferParams params = new TransferOfferParams(receiver, link);
+params.sign(senderKey);
+Bitmark.offer(params, new Callback1<String>() {
+            @Override
+            public void onSuccess(String txId) {
+                
+            }
 
-	void onError(Throwable throwable){
-		// TODO stuff with throwable
-	};
-};
-// Asynchronous for get latest txId
-params.getLatestTxId(bitmarkId, new Callback<String>(){
-	void onSuccess(String latestTxId){
-		params.setPrevTxId(latestTxId);
-		params.sign(sender);
-		BitmarkSDK.bitmark().offer(params, callback);
-	};
+            @Override
+            public void onError(Throwable throwable) {
 
-	void onError(Throwable throwable){
-		// TODO stuff with throwable
-	}
-});
-
-// Synchronous
-params.setPrevTxId(latestTxId);
-params.sign(sender);
-BitmarkSDK.bitmark().offer(params, callback);
+            }
+        });
 ```
 
 ```go
@@ -343,19 +319,18 @@ let bitmarks = try Bitmark.List(params)
 ```
 
 ```java
-QueryParams params = QueryParams.builder()
-					.withStatus("offering")
-					.offerTo("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
-					.build();
-BitmarkSDK.bitmark().list(params, new Callback<List<Bitmark>>(){
-	void onSuccess(List<Bitmark> bitmarks){
-		// TODO stuff with bitmark list
-	};
+BitmarkQueryBuilder builder = new BitmarkQueryBuilder().offerFrom("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog");
+Bitmark.list(builder, new Callback1<GetBitmarksResponse>() {
+            @Override
+            public void onSuccess(GetBitmarksResponse res) {
+                
+            }
 
-	void onError(Throwable throwable){
-		// TODO stuff with throwable
-	}
-});
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
 ```
 
 ```go
@@ -390,18 +365,19 @@ let txid = try Bitmark.response(params)
 ```
 
 ```java
-final TransferResponseParams params = new TransferResponseParams(bitmark, "accept");
-params.sign(receiver);
-BitmarkSDK.bitmark().respond(params, new Callback<String>(){
-	void onSuccess(String txId){
-		// TODO stuff with txId
-	};
+TransferResponseParams params = TransferResponseParams.accept(offerRecord);
+params.sign(receiverKey);
+Bitmark.respond(params, new Callback1<String>() {
+            @Override
+            public void onSuccess(String txId) {
+                
+            }
 
-	void onError(Throwable throwable){
-		// TODO stuff with throwable
-	};
-});
+            @Override
+            public void onError(Throwable throwable) {
 
+            }
+        });
 ```
 
 If the receiver decides to accept the bitmark, the countersignature is generated and make the transfer action take effect.
@@ -429,17 +405,19 @@ try Bitmark.response(params)
 ```
 
 ```java
-final TransferResponseParams params = new TransferResponseParams(bitmark, "reject");
-params.sign(receiver);
-BitmarkSDK.bitmark().respond(params, new Callback<Void>(){
-	void onSuccess(Void aVoid){
-		// TODO stuff
-	};
+TransferResponseParams params = TransferResponseParams.reject(offerRecord);
+params.sign(receiverKey);
+Bitmark.respond(params, new Callback1<String>() {
+            @Override
+            public void onSuccess(String txId) {
+                
+            }
 
-	void onError(Throwable throwable){
-		// TODO stuff with throwable
-	};
-});
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
 ```
 
 ```go
@@ -467,17 +445,19 @@ try Bitmark.response(params)
 ```
 
 ```java
-final TransferResponseParams params = new TransferResponseParams(bitmark, "cancel");
-params.sign(receiver);
-BitmarkSDK.bitmark().respond(params, new Callback<Void>(){
-	void onSuccess(Void aVoid){
-		// TODO stuff
-	};
+TransferResponseParams params = TransferResponseParams.cancel(offerRecord, sender);
+params.sign(senderKey);
+Bitmark.respond(params, new Callback1<String>() {
+            @Override
+            public void onSuccess(String txId) {
+                
+            }
 
-	void onError(Throwable throwable){
-		// TODO stuff with throwable
-	};
-});
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
 ```
 
 ```go

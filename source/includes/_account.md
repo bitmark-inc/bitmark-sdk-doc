@@ -72,6 +72,7 @@ let seed = try account.seed()
 
 ```java
 Seed seed = account.getSeed();
+String encodedSeed = seed.getEncodedSeed();
 // 5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd
 ```
 
@@ -102,7 +103,7 @@ let phrase = try account.recoveryPhrase()
 
 ```java
 RecoveryPhrase recoveryPhrase = account.getRecoveryPhrase();
-String[] mnemonicWords = account.getRecoveryPhrase().getMnemonicWords();
+String[] mnemonicWords = recoveryPhrase.getMnemonicWords();
 // ["acid", "maze", "movie", "turn", "stereo", "over",
 //  "legal", "unhappy", "deny", "early", "scout", "energy",
 //  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
@@ -134,7 +135,8 @@ account = Account(fromSeed: "5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS
 ```
 
 ```java
-Account account = Account.fromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd");
+Seed seed = Seed.fromEncodedSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd");
+Account account = Account.fromSeed(seed);
 ```
 
 ```go
@@ -213,11 +215,9 @@ let (network, pubkey) = try Account.parseAccountNumber(accountNumber)
 ```
 
 ```java
-Account.parseAccountNumber(accountNumber, new Callback<Network, PublicKey> {
-    void onCompleted(Network network, PublicKey publicKey){
-        // TODO stuff
-    };
-});
+AccountNumberData accountNumberData = Account.parseAccountNumber(accountNumber);
+Network network = accountNumberData.getNetwork();
+byte[] publicKey = accountNumberData.getPublicKey().toBytes();
 ```
 
 ```go
