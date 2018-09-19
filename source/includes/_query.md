@@ -203,7 +203,7 @@ if it.Err() != nil {
 
 ```java
 TransactionQueryBuilder builder = new TransactionQueryBuilder()
-                                .owner("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9")
+                                .ownedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9")
                                 .referenceAsset("0e0b4e3bd771811d35a23707ba6197aa1dd5937439a221eaf8e7909309e7b31b6c0e06a1001c261a099abf04c560199db898bc154cf128aa9efa5efd36030c64")
                                 .referenceBitmark("58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518")
                                 .loadAsset(true)
@@ -228,9 +228,41 @@ params := tx.NewQueryParams().
     ReferencedBitmark("58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518")
 ```
 
+```java
+TransactionQueryBuilder builder = new TransactionQueryBuilder()
+                                .referenceBitmark("58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518");
+Transaction.list(builder, new Callback1<GetTransactionsResponse>() {
+            @Override
+            public void onSuccess(GetTransactionsResponse res) {
+                
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
+```
+
 ### Query the transaction history of an account
 
 ```go
 params := tx.NewQueryParams().
     OwnedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", true)
+```
+
+```java
+TransactionQueryBuilder builder = new TransactionQueryBuilder()
+                                .ownedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9");
+Transaction.list(builder, new Callback1<GetTransactionsResponse>() {
+            @Override
+            public void onSuccess(GetTransactionsResponse res) {
+                
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
 ```

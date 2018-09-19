@@ -98,9 +98,9 @@ let bitmarkIds = try Bitmark.issue(params)
 Address owner = account.toAddress();
 IssuanceParams params = new IssuanceParams(assetId, owner, new int[] {1, 2, 3, 4, 5});
 params.sign(ownerKey);
-Bitmark.issue(params, new Callback1<IssueResponse>() {
+Bitmark.issue(params, new Callback1<List<String>>() {
             @Override
-            public void onSuccess(IssueResponse res) {
+            public void onSuccess(List<String> txIds) {
                 
             }
 
@@ -147,9 +147,9 @@ let bitmarkIds = try Bitmark.issue(params)
 Address owner = account.toAddress();
 IssuanceParams params = new IssuanceParams(assetId, owner, quantity);
 params.sign(ownerKey);
-Bitmark.issue(params, new Callback1<IssueResponse>() {
+Bitmark.issue(params, new Callback1<List<String>>() {
             @Override
-            public void onSuccess(IssueResponse res) {
+            public void onSuccess(List<String> txIds) {
                 
             }
 
