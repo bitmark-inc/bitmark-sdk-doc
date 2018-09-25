@@ -216,6 +216,13 @@ let txId = try Bitmark.transfer(params)
 ```
 
 ```java
+// Get the link from bitmarkId
+// You can use traditional callback or modern await
+// Use await for better code but don't forget to catch exceptions maybe occur
+BitmarkRecord bitmark = await((Callable1<GetBitmarkResponse>) callback -> Bitmark.get(bitmarkId, callback)).getBitmark();
+String link = bitmark.getHeadId();            
+
+// Transfer bitmark
 Address receiver = account.toAddress();
 TransferParams params = new TransferParams(receiver, link);
 params.sign(senderKey);
@@ -269,6 +276,13 @@ try Bitmark.offer(params)
 ```
 
 ```java
+// Get the link from bitmarkId
+// You can use traditional callback or modern await
+// Use await for better code but don't forget to catch exceptions maybe occur
+BitmarkRecord bitmark = await((Callable1<GetBitmarkResponse>) callback -> Bitmark.get(bitmarkId, callback)).getBitmark();
+String link = bitmark.getHeadId();            
+
+// Offer bitmark
 Address receiver = account.toAddress();
 TransferOfferParams params = new TransferOfferParams(receiver, link);
 params.sign(senderKey);
