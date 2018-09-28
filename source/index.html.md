@@ -46,6 +46,15 @@ pod 'BitmarkSDK'
 ```
 
 ```java
+// From your build.gradle
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.bitmark.sdk:java-sdk:1.0'
+}
+
 ```
 
 ```go
