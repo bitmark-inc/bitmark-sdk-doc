@@ -13,7 +13,7 @@ var params = try Asset.newRegistrationParams(name: "asset_name",
                                             metadata: ["desc": "sdk example"])
 
 let fileURL = Bundle.main.url(forResource: "file", withExtension: ".ext")!
-try params.setFingerprint(fileurl: fileURL)
+try params.setFingerprint(fromFileURL: fileURL)
 try params.sign(account)
 
 let assetId = try Asset.register(params)
@@ -136,8 +136,9 @@ let bitmarkIds = Bitmark.issue(params);
 ```
 
 ```swift
-var params = Bitmark.newIssuanceParams(assetId: assetId,
-                                       quantity: 100)
+var params = try Bitmark.newIssuanceParams(assetId: assetId,
+                                            owner: issuer.accountNumber,
+                                            quantity: 100)
 try params.sign(issuer)
 
 let bitmarkIds = try Bitmark.issue(params)
@@ -207,9 +208,8 @@ let response = await Bitmark.transfer(params);
 ```
 
 ```swift
-var params = Bitmark.newTransferParams(receiver: receiverAccountNumber,
-                                       requireCounterSign: false)
-try params.from(bitmarkId: bitmarkId)
+var params = try Bitmark.newTransferParams(to: receiverAccountNumber)
+try params.from(bitmarkID: bitmarkId)
 try params.sign(account)
 
 let txId = try Bitmark.transfer(params)
@@ -267,12 +267,11 @@ let response = await Bitmark.offer(params);
 ```
 
 ```swift
-var params := Bitmark.newOfferParams(receiver: receiverAccountNumber,
-                                     requireCounterSign: true)
-try params.from(bitmarkId: bitmarkId)
+var params := Bitmark.newOfferParams(to: receiverAccountNumber, info: nil) // info: extra info attach to the transfer offer, it can be nil
+try params.from(bitmarkID: bitmarkId)
 try params.sign(account)
 
-try Bitmark.offer(params)
+try Bitmark.offer(withOfferParams: params)
 ```
 
 ```java
@@ -324,12 +323,10 @@ let response = await Bitmark.list(bitmarkQueryParams);
 ```
 
 ```swift
-var builder = QueryBuilder.newListBuilder()
-let params = builder
-    .status("offering")
-    .offerTo("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
-    .build()
-let bitmarks = try Bitmark.List(params)
+let query = try Bitmark.newBitmarkQueryParams()
+    .limit(size: 100)
+    .offer(from: "e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
+let bitmarks = try Bitmark.list(params: query)
 ```
 
 ```java
@@ -375,9 +372,9 @@ response = await Bitmark.response(transferOfferResponseParams, receiverAccount);
 ```
 
 ```swift
-var params = Bitmark.newTransferResponseParams(bitmark: bitmark, response: .accept)
-try params.sign(receiver)
-let txid = try Bitmark.response(params)
+var responseParams = try Bitmark.newTransferResponseParams(withBitmark: receivingBitmark, action: .accept)
+try responseParams.sign(receiverAccount)
+try Bitmark.response(withResponseParams: responseParams)
 ```
 
 ```java
@@ -417,9 +414,9 @@ response = await Bitmark.response(transferOfferResponseParams, receiverAccount);
 ```
 
 ```swift
-var params = Bitmark.newTransferResponseParams(bitmark: bitmark, response: .reject)
-try params.sign(receiver)
-try Bitmark.response(params)
+var responseParams = try Bitmark.newTransferResponseParams(withBitmark: receivingBitmark, action: .reject)
+try responseParams.sign(receiverAccount)
+try Bitmark.response(withResponseParams: responseParams)
 ```
 
 ```java
@@ -458,9 +455,9 @@ response = await Bitmark.response(transferOfferResponseParams, senderAccount);
 ```
 
 ```swift
-var params = Bitmark.newTransferResponseParams(bitmark: bitmark, response: .cancel)
-try params.sign(receiver)
-try Bitmark.response(params)
+var responseParams = try Bitmark.newTransferResponseParams(withBitmark: bitmark, action: .cancel)
+try responseParams.sign(senderAccount)
+try Bitmark.response(withResponseParams: responseParams)
 ```
 
 ```java

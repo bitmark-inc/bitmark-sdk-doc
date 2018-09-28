@@ -18,6 +18,10 @@
 let response = await Asset.get(assetId);
 ````
 
+````swift
+let response = Asset.get(assetID: assetId)
+````
+
 ```go
 asset, err := asset.Get(assetId)
 ```
@@ -44,6 +48,14 @@ let assetQueryParams = Asset.newAssetQueryBuilder()
     .build();
 
 let response = await Asset.list(assetQueryParams);
+````
+
+````swift
+let params = try Asset.newQueryParams()
+                .limit(size: 100)
+                .registeredBy(registrant: "ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+
+let assets = try Asset.list(params: params)
 ````
 
 ```go
@@ -111,6 +123,10 @@ Asset.list(builder, new Callback1<List<AssetRecord>>() {
 let response = await Bitmark.get(bitmarkId, false); // false: not include asset, true: include asset 
 ````
 
+````swift
+let bitmark = Bitmark.get(bitmarkID: bitmarkId); 
+````
+
 ```go
 bitmark, err := bitmark.Get(bitmarkId, false)
 ```
@@ -128,6 +144,17 @@ let bitmarkQueryParams = Bitmark.newBitmarkQueryBuilder()
     .build();
 
 let response = await Bitmark.list(bitmarkQueryParams);
+````
+
+````swift
+let query = try Bitmark.newBitmarkQueryParams()
+    .limit(size: 100)
+    .issued(by: "ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+    .referenced(toAssetID: "0e0b4e3bd771811d35a23707ba6197aa1dd5937439a221eaf8e7909309e7b31b6c0e06a1001c261a099abf04c560199db898bc154cf128aa9efa5efd36030c64")
+    .offer(from: "ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+    .offer(to: "ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+    .loadAsset(true)
+let (bitmarks, assets) = try Bitmark.list(params: query)
 ````
 
 ```go
@@ -223,6 +250,16 @@ let transactionQueryParams = Transaction.newTransactionQueryBuilder()
 let response = await Transaction.list(transactionQueryParams);
 ````
 
+````swift
+let query = try Transaction.newTransactionQueryParams()
+    .limit(size: 100)
+    .owned(by: "eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", transient: true)
+    .referenced(toAssetID: "0e0b4e3bd771811d35a23707ba6197aa1dd5937439a221eaf8e7909309e7b31b6c0e06a1001c261a099abf04c560199db898bc154cf128aa9efa5efd36030c64")
+    .referenced(toBitmarkID: "58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518")
+    .loadAsset(true)
+let (txs, assets) = try Transaction.list(params: query)
+````
+
 ```go
 params := tx.NewQueryParams().
     OwnedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", true).
@@ -271,6 +308,12 @@ let transactionQueryParams = Transaction.newTransactionQueryBuilder()
 let response = await Transaction.list(transactionQueryParams);
 ````
 
+````swift
+let query = try Transaction.newTransactionQueryParams()
+    .referenced(toBitmarkID: "58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518")
+let (txs, _) = try Transaction.list(params: query)
+````
+
 ```go
 params := tx.NewQueryParams().
     ReferencedBitmark("58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518")
@@ -300,6 +343,13 @@ let transactionQueryParams = Transaction.newTransactionQueryBuilder()
 
 let response = await Transaction.list(transactionQueryParams);
 ````
+
+````swift
+let query = try Transaction.newTransactionQueryParams()
+    .owned(by: "eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", transient: true)
+let (txs, _) = try Transaction.list(params: query)
+````
+
 ```go
 params := tx.NewQueryParams().
     OwnedBy("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", true)

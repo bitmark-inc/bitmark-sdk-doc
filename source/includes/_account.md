@@ -71,7 +71,7 @@ let seed = account.getSeed();
 ```
 
 ```swift
-let seed = try account.seed()
+let seed = try account.toSeed()
 // 5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd
 ```
 
@@ -99,7 +99,7 @@ let recoveryPhrase = account.getRecoveryPhrase();
 ```
 
 ```swift
-let phrase = try account.recoveryPhrase()
+let phrase = try account.getRecoverPhrase()
 // ["acid", "maze", "movie", "turn", "stereo", "over",
 //  "legal", "unhappy", "deny", "early", "scout", "energy",
 //  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
