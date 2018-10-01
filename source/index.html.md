@@ -85,6 +85,10 @@ sdk.init(config);
 
 ```swift
 import BitmarkSDK
+
+BitmarkSDK.initialize(config: SDKConfig(apiToken: "api-token",
+                                        network: .testnet,
+                                        urlSession: URLSession.shared))
 ```
 
 ```java
