@@ -67,7 +67,7 @@ Because seed and recovery phrase is the "ticket" that allows someone to control 
 
 ```javascript
 let seed = account.getSeed();
-// 5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd
+// 9J87CAsHdFdoEu6N1unZk3sqhVBkVL8Z8
 ```
 
 ```swift
@@ -91,11 +91,15 @@ The seed is the more compact format of an exported account for your program to r
 ### Recovery Phrase
 
 ```javascript
+// English version
 let recoveryPhrase = account.getRecoveryPhrase();
-// ["acid", "maze", "movie", "turn", "stereo", "over",
-//  "legal", "unhappy", "deny", "early", "scout", "energy",
-//  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
-//  "flower", "knee", "sick", "number", "acoustic", "you"]
+// or 
+let recoveryPhrase = account.getRecoveryPhrase("en");
+// "name gaze apart lamp lift zone believe steak session laptop crowd hill"
+
+// Chinese version
+let recoveryPhrase = account.getRecoveryPhrase("cn");
+// "箱 阻 起 归 彻 矮 问 栽 瓜 鼓 支 乐"
 ```
 
 ```swift
@@ -132,7 +136,7 @@ On the contrast, there are functions for you to recover the accounts.
 ### Recover from seed
 
 ```javascript
-let account = Account.fromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd");
+let account = Account.fromSeed("9J87CAsHdFdoEu6N1unZk3sqhVBkVL8Z8");
 ```
 
 ```swift
@@ -151,11 +155,14 @@ account := account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS
 ### Recover from phrase
 
 ```javascript
-let account = Account.fromRecoveryPhrase([
-    "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
-    "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
-    "kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you"]
-);
+// English version
+let account = Account.fromRecoveryPhrase("name gaze apart lamp lift zone believe steak session laptop crowd hill");
+// or
+let account = Account.fromRecoveryPhrase("name gaze apart lamp lift zone believe steak session laptop crowd hill", "en");
+
+
+// Chinese version
+let account = Account.fromRecoveryPhrase("箱 阻 起 归 彻 矮 问 栽 瓜 鼓 支 乐", "cn");
 ```
 
 ```swift

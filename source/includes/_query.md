@@ -44,6 +44,7 @@ Asset.get(assetId, new Callback1<AssetRecord>() {
 ````javascript
 let assetQueryParams = Asset.newAssetQueryBuilder()
     .registeredBy("ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+    .pending(true)
     .limit(10)
     .build();
 
@@ -140,6 +141,7 @@ let bitmarkQueryParams = Bitmark.newBitmarkQueryBuilder()
     .offerFrom("ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
     .offerTo("ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
     .loadAsset(true)
+    .pending(true)
     .limit(10)
     .build();
 
