@@ -52,7 +52,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.bitmark.sdk:java-sdk:1.0'
+    implementation 'com.bitmark.sdk:java-sdk:1.2'
 }
 
 ```

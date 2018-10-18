@@ -82,7 +82,7 @@ let seed = try account.toSeed()
 ```java
 Seed seed = account.getSeed();
 String encodedSeed = seed.getEncodedSeed();
-// 5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd
+// 9J87CAsHdFdoEu6N1unZk3sqhVBkVL8Z8
 ```
 
 ```go
@@ -115,12 +115,19 @@ let phrase = try account.getRecoverPhrase()
 ```
 
 ```java
+// English ver
 RecoveryPhrase recoveryPhrase = account.getRecoveryPhrase();
+// Or
+RecoveryPhrase recoveryPhrase = account.getRecoveryPhrase(Locale.ENGLISH);
+
 String[] mnemonicWords = recoveryPhrase.getMnemonicWords();
-// ["acid", "maze", "movie", "turn", "stereo", "over",
-//  "legal", "unhappy", "deny", "early", "scout", "energy",
-//  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
-//  "flower", "knee", "sick", "number", "acoustic", "you"]
+// ["name", "gaze", "apart", "lamp", "lift", "zone",
+//  "believe", "steak", "session", "laptop", "crowd", "hill"]
+
+// Chinese ver
+RecoveryPhrase recoveryPhrase = account.getRecoveryPhrase(Locale.CHINESE);
+String[] mnemonicWords = recoveryPhrase.getMnemonicWords();
+// ["箱", "阻", "起", "归", "彻", "矮", "问", "栽", "瓜", "鼓", "支", "乐"]
 ```
 
 ```go
@@ -148,7 +155,7 @@ account = Account(fromSeed: "5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS
 ```
 
 ```java
-Seed seed = Seed.fromEncodedSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd");
+Seed seed = Seed.fromEncodedSeed("9J87CAsHdFdoEu6N1unZk3sqhVBkVL8Z8");
 Account account = Account.fromSeed(seed);
 ```
 
@@ -178,9 +185,11 @@ let account = try Account(fromRecoveryPhrase: [
 ```
 
 ```java
-Account account = Account.fromRecoveryPhrase("acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
-"deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
-"kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you");
+Account account = Account.fromRecoveryPhrase("name", "gaze", "apart", "lamp", "lift", "zone", "believe", "steak", "session", "laptop", "crowd", "hill"); // English
+
+// Or 
+Account account = Account.fromRecoveryPhrase("箱", "阻", "起", "归", "彻", "矮", "问", "栽", "瓜", "鼓", "支", "乐"); // Chinese
+
 ```
 
 ```go
