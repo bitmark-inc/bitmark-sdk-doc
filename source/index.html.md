@@ -14,6 +14,7 @@ toc_footers:
   - <a href='https://github.com/bitmark-inc/bitmark-sdk'>Javascript SDK</a>
   - <a href='https://github.com/bitmark-inc/bitmark-sdk-go'>Go SDK</a>
   - <a href='https://github.com/bitmark-inc/bitmark-sdk-swift'>Swift SDK</a>
+  - <a href='https://github.com/bitmark-inc/bitmark-sdk-java'>Java SDK</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
