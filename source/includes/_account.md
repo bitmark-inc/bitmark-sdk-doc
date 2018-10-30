@@ -107,11 +107,11 @@ let recoveryPhrase = account.getRecoveryPhrase("cn");
 ```
 
 ```swift
-let phrase = try account.getRecoverPhrase()
-// ["acid", "maze", "movie", "turn", "stereo", "over",
-//  "legal", "unhappy", "deny", "early", "scout", "energy",
-//  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
-//  "flower", "knee", "sick", "number", "acoustic", "you"]
+// English version
+let phrase = try account.getRecoverPhrase(language: .english)
+
+// Tranditional Chinese version
+let phrase = try account.getRecoverPhrase(language: .chineseTranditional)
 ```
 
 ```java
@@ -177,10 +177,17 @@ let account = Account.fromRecoveryPhrase("箱 阻 起 归 彻 矮 问 栽 瓜 �
 ```
 
 ```swift
-let account = try Account(fromRecoveryPhrase: [
-    "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
-    "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
-    "kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you"]
+// English version
+let account = try Account(recoverPhrase: [
+    "music", "life", "stone", "brain", "slush", "mango",
+     "diagram", "business", "dumb", "cinnamon", "coral", "year"],
+    language: .english
+)
+
+// Tranditional Chinese version
+let account = try Account(recoverPhrase: [
+    "婆", "潮", "睛", "毫", "壤", "殿", "北", "謝", "人", "答", "隊", "星"],
+    language: .chineseTranditional
 )
 ```
 
