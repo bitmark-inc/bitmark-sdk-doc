@@ -111,7 +111,7 @@ let recoveryPhrase = account.getRecoveryPhrase("cn");
 let phrase = try account.getRecoverPhrase(language: .english)
 
 // Tranditional Chinese version
-let phrase = try account.getRecoverPhrase(language: .chineseTranditional)
+let phrase = try account.getRecoverPhrase(language: .chineseTraditional)
 ```
 
 ```java
@@ -187,7 +187,7 @@ let account = try Account(recoverPhrase: [
 // Tranditional Chinese version
 let account = try Account(recoverPhrase: [
     "婆", "潮", "睛", "毫", "壤", "殿", "北", "謝", "人", "答", "隊", "星"],
-    language: .chineseTranditional
+    language: .chineseTraditional
 )
 ```
 
