@@ -61,7 +61,13 @@ dependencies {
 ```
 
 ```go
-go get github.com/bitmark-inc/bitmark-sdk-go/v2
+# Please specify to use v2 branch by dependency management tool, e.g.,
+govendor fetch github.com/bitmark-inc/bitmark-sdk-go@v2
+
+# Otherwise, checkout to v2 branch manullay
+go get github.com/bitmark-inc/bitmark-sdk-go
+cd $GOPATH/src/github.com/bitmark-inc/bitmark-sdk-go
+git checkout v2
 ```
 
 ## Get your API token
