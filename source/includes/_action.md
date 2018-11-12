@@ -299,12 +299,12 @@ Bitmark.offer(params, new Callback1<String>() {
 ```
 
 ```go
-params := sdk.Bitmark.NewOfferParams(receiverAccountNumber, true)
+params := bitmark.NewOfferParams(receiverAccountNumber, true)
 params.FromBitmark() // asynchrous, just to check the head_id
 // params.FromTx() // or synchrous
 params.Sign(sender)
 
-sdk.Bitmark.Offer(params)
+bitmark.Offer(params)
 ```
 
 The current owner of a bitmark can propose a transfer offer for another account if the status of the bitmark is `settled`,
@@ -397,9 +397,9 @@ If the receiver decides to accept the bitmark, the countersignature is generated
 The status of the bitmark will change from `offering` to `transferring`. The 
 
 ```go
-params := sdk.Bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Accpet)
+params := bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Accpet)
 params.Sign(receiver)
-txId, err := sdk.Bitmark.Respond(params)
+txId, err := bitmark.Respond(params)
 ```
 
 ### Reject the transfer offer
@@ -436,9 +436,9 @@ Bitmark.respond(params, new Callback1<String>() {
 ```
 
 ```go
-params := sdk.Bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Reject)
+params := bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Reject)
 params.Sign(receiver)
-sdk.Bitmark.Respond(params)
+bitmark.Respond(params)
 ```
 
 The receiver can also reject the bitmark transfer offer.
@@ -477,9 +477,9 @@ Bitmark.respond(params, new Callback1<String>() {
 ```
 
 ```go
-params := sdk.Bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Cancel)
+params := bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Cancel)
 params.Sign(receiver)
-sdk.Bitmark.Respond(params)
+bitmark.Respond(params)
 ```
 
 If the receiver hasn't responded to the bitmark transfer offer (neither accepted nor rejected), the sender can cancel the offer.

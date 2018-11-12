@@ -28,6 +28,9 @@ Account account = new Account();
 ```
 
 ```go
+// The account package must be imported
+// import github.com/bitmark-inc/bitmark-sdk-go/account
+
 account, err := account.New()
 ```
 
