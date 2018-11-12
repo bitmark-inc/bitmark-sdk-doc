@@ -61,7 +61,7 @@ dependencies {
 ```
 
 ```go
-go get github.com/aws/bitmark-sdk-go
+go get github.com/bitmark-inc/bitmark-sdk-go/v2
 ```
 
 ## Get your API token
