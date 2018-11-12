@@ -57,14 +57,13 @@ dependencies {
     // Or
     implementation 'com.bitmark.sdk:android-sdk:1.1' // Android SDK
 }
-
 ```
 
 ```go
-# Please specify to use v2 branch by dependency management tool, e.g.,
+// Please specify to use v2 branch by dependency management tool, e.g.,
 govendor fetch github.com/bitmark-inc/bitmark-sdk-go@v2
 
-# Otherwise, checkout to v2 branch manullay
+// Otherwise, checkout to v2 branch manullay
 go get github.com/bitmark-inc/bitmark-sdk-go
 cd $GOPATH/src/github.com/bitmark-inc/bitmark-sdk-go
 git checkout v2
