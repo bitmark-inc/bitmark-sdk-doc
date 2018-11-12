@@ -28,7 +28,7 @@ Account account = new Account();
 ```
 
 ```go
-import github.com/bitmark-inc/bitmark-sdk-go/account
+import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
 func main() {
     account, err := account.New()
@@ -52,7 +52,7 @@ String accountNumber = account.getAccountNumber();
 ```
 
 ```go
-import github.com/bitmark-inc/bitmark-sdk-go/account
+import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
 func main() {
     accountNumber := account.AccountNumber()
@@ -93,7 +93,7 @@ String encodedSeed = seed.getEncodedSeed();
 ```
 
 ```go
-import github.com/bitmark-inc/bitmark-sdk-go/account
+import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
 func main() {
     seed := account.Seed()
@@ -141,7 +141,7 @@ String[] mnemonicWords = recoveryPhrase.getMnemonicWords();
 ```
 
 ```go
-import github.com/bitmark-inc/bitmark-sdk-go/account
+import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
 func main() {
     phrase := account.RecoveryPhrase()
@@ -174,7 +174,7 @@ Account account = Account.fromSeed(seed);
 ```
 
 ```go
-import github.com/bitmark-inc/bitmark-sdk-go/account
+import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
 func main() {
     account := account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
@@ -218,7 +218,7 @@ Account account = Account.fromRecoveryPhrase("箱", "阻", "起", "归", "彻", 
 ```
 
 ```go
-import github.com/bitmark-inc/bitmark-sdk-go/account
+import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
 func main() {
     account := account.FromRecoveryPhrase([]string{
@@ -247,8 +247,8 @@ let isValid = Account.isValidAccountNumber(accountNumber)
 boolean isValid = Account.isValidAccountNumber(accountNumber);
 ```
 
-```
-import github.com/bitmark-inc/bitmark-sdk-go/account
+```go
+import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
 func main() {
     valid := account.IsValidAccountNumber(accountNumber)
@@ -279,7 +279,7 @@ byte[] publicKey = accountNumberData.getPublicKey().toBytes();
 ```
 
 ```go
-import github.com/bitmark-inc/bitmark-sdk-go/account
+import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
 func main() {
     network, pubkey, err := account.ParseAccountNumber(accountNumber)
