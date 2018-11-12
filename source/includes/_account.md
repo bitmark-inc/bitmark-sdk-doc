@@ -28,10 +28,11 @@ Account account = new Account();
 ```
 
 ```go
-// The account package must be imported
-// import github.com/bitmark-inc/bitmark-sdk-go/account
+import github.com/bitmark-inc/bitmark-sdk-go/account
 
-account, err := account.New()
+func main() {
+    account, err := account.New()
+}
 ```
 
 ## Get the account number
@@ -51,8 +52,11 @@ String accountNumber = account.getAccountNumber();
 ```
 
 ```go
-accountNumber := account.AccountNumber()
-// ffzcoJeg7p6kJrV6VNhS6juuceTCKMmek1WrXopvbzNTvYqANy
+import github.com/bitmark-inc/bitmark-sdk-go/account
+
+func main() {
+    accountNumber := account.AccountNumber()
+}
 ```
 
 The account number of an account serves as a pseudonymous identifier within the Bitmark blockchain, which can represent:
@@ -89,8 +93,11 @@ String encodedSeed = seed.getEncodedSeed();
 ```
 
 ```go
-seed := account.Seed()
-// 5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd
+import github.com/bitmark-inc/bitmark-sdk-go/account
+
+func main() {
+    seed := account.Seed()
+}
 ```
 
 The seed is the more compact format of an exported account for your program to re-instantiate an account.
@@ -134,11 +141,15 @@ String[] mnemonicWords = recoveryPhrase.getMnemonicWords();
 ```
 
 ```go
-phrase := account.RecoveryPhrase()
-// ["acid", "maze", "movie", "turn", "stereo", "over",
-//  "legal", "unhappy", "deny", "early", "scout", "energy",
-//  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
-//  "flower", "knee", "sick", "number", "acoustic", "you"]
+import github.com/bitmark-inc/bitmark-sdk-go/account
+
+func main() {
+    phrase := account.RecoveryPhrase()
+    // ["acid", "maze", "movie", "turn", "stereo", "over",
+    //  "legal", "unhappy", "deny", "early", "scout", "energy",
+    //  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
+    //  "flower", "knee", "sick", "number", "acoustic", "you"]
+}
 ```
 
 The recovery phrase, which consists of 24 [mnemonic words](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki), is superior for human interaction compared to the handling of seed. If you don't plan to custody user's private key, make sure you present the recovery phrase to your user.
@@ -163,7 +174,11 @@ Account account = Account.fromSeed(seed);
 ```
 
 ```go
-account := account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
+import github.com/bitmark-inc/bitmark-sdk-go/account
+
+func main() {
+    account := account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
+}
 ```
 
 ### Recover from phrase
@@ -203,11 +218,15 @@ Account account = Account.fromRecoveryPhrase("箱", "阻", "起", "归", "彻", 
 ```
 
 ```go
-account := account.FromRecoveryPhrase([]string{
-    "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
-    "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
-    "kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you",
-})
+import github.com/bitmark-inc/bitmark-sdk-go/account
+
+func main() {
+    account := account.FromRecoveryPhrase([]string{
+        "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
+        "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
+        "kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you",
+    })
+}
 ```
 
 ## Account utility functions
@@ -228,8 +247,12 @@ let isValid = Account.isValidAccountNumber(accountNumber)
 boolean isValid = Account.isValidAccountNumber(accountNumber);
 ```
 
-```go
-valid := account.IsValidAccountNumber(accountNumber)
+```
+import github.com/bitmark-inc/bitmark-sdk-go/account
+
+func main() {
+    valid := account.IsValidAccountNumber(accountNumber)
+}
 ```
 
 The function returns a boolean to indicate whether a given account number is valid in current runtime environment, i.e.,
@@ -256,7 +279,11 @@ byte[] publicKey = accountNumberData.getPublicKey().toBytes();
 ```
 
 ```go
-network, pubkey, err := account.ParseAccountNumber(accountNumber)
+import github.com/bitmark-inc/bitmark-sdk-go/account
+
+func main() {
+    network, pubkey, err := account.ParseAccountNumber(accountNumber)
+}
 ```
 
 The function parses an account number and returns its network and public key.
