@@ -30,7 +30,7 @@ Account account = new Account();
 ```go
 import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
-func main() {
+func createNewAccountExample() {
     account, err := account.New()
 }
 ```
@@ -54,8 +54,8 @@ String accountNumber = account.getAccountNumber();
 ```go
 import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
-func main() {
-    accountNumber := account.AccountNumber()
+func getAccountNumberExample(acct account.Account) {
+    accountNumber := acct.AccountNumber()
 }
 ```
 
@@ -95,8 +95,8 @@ String encodedSeed = seed.getEncodedSeed();
 ```go
 import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
-func main() {
-    seed := account.Seed()
+func getSeedExample(acct account.Account) {
+    seed := acct.Seed()
 }
 ```
 
@@ -141,18 +141,17 @@ String[] mnemonicWords = recoveryPhrase.getMnemonicWords();
 ```
 
 ```go
-import "github.com/bitmark-inc/bitmark-sdk-go/account"
+import (
+    "github.com/bitmark-inc/bitmark-sdk-go/account"
+    "golang.org/x/text/language"
+)
 
-func main() {
-    phrase := account.RecoveryPhrase()
-    // ["acid", "maze", "movie", "turn", "stereo", "over",
-    //  "legal", "unhappy", "deny", "early", "scout", "energy",
-    //  "mule", "gap", "member", "vendor", "kangaroo", "toddler",
-    //  "flower", "knee", "sick", "number", "acoustic", "you"]
+func getRecoveryPhraseExample(acct account.Account) {
+    phrase := acct.RecoveryPhrase(language.AmericanEnglish)
 }
 ```
 
-The recovery phrase, which consists of 24 [mnemonic words](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki), is superior for human interaction compared to the handling of seed. If you don't plan to custody user's private key, make sure you present the recovery phrase to your user.
+The recovery phrase, which consists of 12 [mnemonic words](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki), is superior for human interaction compared to the handling of seed. If you don't plan to custody user's private key, make sure you present the recovery phrase to your user. Currently English and traditional Chinese are supported.
 
 ## Import an account
 
@@ -176,8 +175,8 @@ Account account = Account.fromSeed(seed);
 ```go
 import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
-func main() {
-    account := account.FromSeed("5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS6tXd")
+func recoverFromSeedExample() {
+    account, err := account.FromSeed("9J87CAsHdFdoEu6N1unZk3sqhVBkVL8Z8")
 }
 ```
 
@@ -220,12 +219,14 @@ Account account = Account.fromRecoveryPhrase("箱", "阻", "起", "归", "彻", 
 ```go
 import "github.com/bitmark-inc/bitmark-sdk-go/account"
 
-func main() {
-    account := account.FromRecoveryPhrase([]string{
-        "acid", "maze", "movie", "turn", "stereo", "over", "legal", "unhappy",
-        "deny", "early", "scout", "energy", "mule", "gap", "member", "vendor",
-        "kangaroo", "toddler", "flower", "knee", "sick", "number", "acoustic", "you",
-    })
+func recoverFromPhraseExample() {
+    account := account.FromRecoveryPhrase(
+        []string{
+            "name", "gaze", "apart", "lamp", " lift", " zone",
+            "believe" , "steak", "session", "laptop", "crowd", "hill",
+        },
+        language.AmericanEnglish,
+    )
 }
 ```
 

@@ -123,6 +123,8 @@ func main() {
     HttpClient: httpClient,
   }
   sdk.Init(config)
+
+  // Every subsequent examples assumes the SDK is already correctly initialized
 }
 ```
 
