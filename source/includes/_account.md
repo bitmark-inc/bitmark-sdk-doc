@@ -147,7 +147,7 @@ import (
 )
 
 func getRecoveryPhraseExample(acct account.Account) {
-    phrase := acct.RecoveryPhrase(language.AmericanEnglish)
+    phrase, err := acct.RecoveryPhrase(language.AmericanEnglish)
 }
 ```
 
