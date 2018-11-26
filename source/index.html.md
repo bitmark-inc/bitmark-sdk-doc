@@ -22,6 +22,7 @@ includes:
   - account
   - action
   - query
+  - migration
 
 search: true
 ---
