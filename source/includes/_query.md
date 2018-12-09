@@ -187,7 +187,7 @@ func listBitmarksExample() {
         LoadAsset(true).
         Limit(10)
 
-    bitmarks, err := bitmark.List(builder)
+    bitmarks, err := bitmark.List(params)
 }
 ```
 

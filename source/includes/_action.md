@@ -48,7 +48,7 @@ import (
 )
 
 // This sample assumes the SDK is already correctly initialized
-func registerAssetExample(acct *account.Account) {
+func registerAssetExample(owner account.Account) {
     params, err := asset.NewRegistrationParams(
         "name", // asset name
         map[string]string{"k1": "v1", "k2": "v2"}, // asset metadata
@@ -57,7 +57,7 @@ func registerAssetExample(acct *account.Account) {
     dat, err := ioutil.ReadFile("/tmp/dat")
     params.SetFingerprint(dat) // calculate the fingerprint
 
-    params.Sign(acct)
+    params.Sign(owner)
     params.JSON()
 
     assetId, err := asset.Register(p)
@@ -126,14 +126,14 @@ import (
 )
 
 // This sample assumes the SDK is already correctly initialized
-func issueByNoncesExample(account *account.Account) {
+func issueByNoncesExample(issuer account.Account) {
     params := bitmark.NewIssuanceParams(
         assetId,
         bitmark.QuantityOptions{
             Nonces: []uint64{uint64(1), uint64(2), uint64(3)},
         },
     )
-    params.Sign(sender)
+    params.Sign(issuer)
     bitmarkIds, err := bitmark.Issue(params) // returns three bitmark IDs
 }
 ```
@@ -184,14 +184,14 @@ import (
 )
 
 // This sample assumes the SDK is already correctly initialized
-func issueByQuantityExample(sender *account.Account) {
+func issueByQuantityExample(issuer account.Account) {
     params := bitmark.NewIssuanceParams(
         assetId,
         bitmark.QuantityOptions{
             Quantity: 3,
         },
     )
-    params.Sign(sender)
+    params.Sign(issuer)
     bitmarkIds, err := bitmark.Issue(params) // returns three bitmark IDs
 }
 ```
@@ -270,7 +270,7 @@ import (
 )
 
 // This sample assumes the SDK is already correctly initialized
-func transferExample(sender *account.Account) {
+func transferExample(sender account.Account) {
     params := bitmark.NewTransferParams("eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9") // set receiver's account number
     params.FromBitmark("71131367bc56628bb2eee15da274e466f2ae1533c192d60c9eeef6484b1117e3") // specify which bitmark to be transferred
 
@@ -337,7 +337,7 @@ import (
 )
 
 // This sample assumes the SDK is already correctly initialized
-func offerBitmarkExample(sender *account.Account) {
+func offerBitmarkExample(sender account.Account) {
     params := bitmark.NewOfferParams(receiverAccountNumber, true)
     params.FromBitmark() // asynchrous, just to check the head_id
     // params.FromTx() // or synchrous
@@ -445,7 +445,7 @@ import (
 )
 
 // This sample assumes the SDK is already correctly initialized
-func acceptOfferExample(receiver *account.Account) {
+func acceptOfferExample(receiver account.Account) {
     params := bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Accpet)
     params.Sign(receiver)
     txId, err := bitmark.Respond(params)
@@ -492,7 +492,7 @@ import (
 )
 
 // This sample assumes the SDK is already correctly initialized
-func rejectOfferExample(receiver *account.Account) {
+func rejectOfferExample(receiver account.Account) {
     params := bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Reject)
     params.Sign(receiver)
     txId, err := bitmark.Respond(params)
@@ -541,7 +541,7 @@ import (
 )
 
 // This sample assumes the SDK is already correctly initialized
-func cancelOfferExample(receiver *account.Account) {
+func cancelOfferExample(receiver account.Account) {
     params := bitmark.NewTransferResponseParams(bitmark, sdk.Bitmark.Cancel)
     params.Sign(receiver)
     txId, err := bitmark.Respond(params)
