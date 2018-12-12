@@ -23,6 +23,7 @@ includes:
   - action
   - query
   - migration
+  - store_seed
 
 search: true
 ---
