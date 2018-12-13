@@ -108,7 +108,7 @@ IssuanceParams params = new IssuanceParams(assetId, owner, new int[] {1, 2, 3, 4
 params.sign(ownerKey);
 Bitmark.issue(params, new Callback1<List<String>>() {
             @Override
-            public void onSuccess(List<String> txIds) {
+            public void onSuccess(List<String> bitmarkIds) {
                 
             }
 
