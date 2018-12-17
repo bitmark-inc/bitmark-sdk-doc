@@ -122,7 +122,7 @@ func main() {
   config := &sdk.Config{
     APIToken: "api-token",
     Network: "testnet",
-    HttpClient: httpClient,
+    HTTPClient: httpClient,
   }
   sdk.Init(config)
 

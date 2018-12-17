@@ -293,8 +293,8 @@ func listTxsExample() {
         ReferencedBitmark("58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518").
         LoadAsset(true).
         Limit(10)
-        
-    txs, err := tx.List(builder)
+
+    txs, err := tx.List(params)
 }
 ```
 
