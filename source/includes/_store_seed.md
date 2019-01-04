@@ -60,4 +60,18 @@ Bitmark Android SDK always authenticate user **each time** they make a key using
 ## iOS
 
 ```swift
+// Storing your account
+try account.saveToKeychain(service: "com.bitmarksdk.example",
+                            alias: "bitmark-account",
+                            requireAuthenticationWithMessage: nil)
+
+// Getting your account
+try Account.loadFromKeychain(service: "com.bitmarksdk.example",
+                                alias: "bitmark-account",
+                                requireAuthenticationWithMessage: nil)
 ```
+
+Bitmark Swift SDK uses iOS keychain to store bitmark accounts. To use this feature, on your app, you need to setup the keychain first.
+Parameters:
+1. `service`: your keychain service name, depends on what you configurated on your entitlement file.
+2. `alias`: the key to save your account into keychain. Default value is your account number.
