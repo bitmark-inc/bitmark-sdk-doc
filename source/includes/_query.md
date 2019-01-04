@@ -167,7 +167,10 @@ let query = try Bitmark.newBitmarkQueryParams()
     .referenced(toAssetID: "0e0b4e3bd771811d35a23707ba6197aa1dd5937439a221eaf8e7909309e7b31b6c0e06a1001c261a099abf04c560199db898bc154cf128aa9efa5efd36030c64")
     .offer(from: "ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
     .offer(to: "ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+    .at(offset)
+    .to(direction: .earlier)
     .loadAsset(true)
+    .includePending(true)
 let (bitmarks, assets) = try Bitmark.list(params: query)
 ````
 
@@ -276,7 +279,10 @@ let query = try Transaction.newTransactionQueryParams()
     .owned(by: "eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", transient: true)
     .referenced(toAssetID: "0e0b4e3bd771811d35a23707ba6197aa1dd5937439a221eaf8e7909309e7b31b6c0e06a1001c261a099abf04c560199db898bc154cf128aa9efa5efd36030c64")
     .referenced(toBitmarkID: "58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518")
+    .at(offset)
+    .to(direction: .earlier)
     .loadAsset(true)
+    .includePending(true)
 let (txs, assets) = try Transaction.list(params: query)
 ````
 
