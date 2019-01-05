@@ -168,7 +168,12 @@ account = Account(fromSeed: "5XEECttvVsk5xPjZ1zrgtWoauw2xmPwTKCWEN5GF24UpaGZhAGS
 ```
 
 ```java
-Seed seed = Seed.fromEncodedSeed("9J87CAsHdFdoEu6N1unZk3sqhVBkVL8Z8");
+// 12 words
+Seed seed = SeedTwelve.fromEncodedSeed("9J87CAsHdFdoEu6N1unZk3sqhVBkVL8Z8");
+
+// 24 words
+Seed seed = SeedTwentyFour.fromEncodedSeed("5XEECt18HGBGNET1PpxLhy5CsCLG9jnmM6Q8QGF4U2yGb1DABXZsVeD");
+
 Account account = Account.fromSeed(seed);
 ```
 
