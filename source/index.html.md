@@ -8,14 +8,14 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - go
 
 toc_footers:
-  - <a href='https://bitmark.com'>Website</a>
-  - <a href='https://blog.bitmark.com'>Blog</a>
-  - <a href='https://bitmark.com/assets/bitmark_technical-white-paper.pdf'>White Paper</a>
-  - <a href='https://github.com/bitmark-inc/bitmark-sdk'>Javascript SDK</a>
-  - <a href='https://github.com/bitmark-inc/bitmark-sdk-go'>Go SDK</a>
-  - <a href='https://github.com/bitmark-inc/bitmark-sdk-swift'>Swift SDK</a>
-  - <a href='https://github.com/bitmark-inc/bitmark-sdk-java'>Java & Android SDK</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - <a href='https://bitmark.com' target='_blank'>Website</a>
+  - <a href='https://blog.bitmark.com' target='_blank'>Blog</a>
+  - <a href='https://bitmark.com/assets/bitmark_technical-white-paper.pdf' target='_blank'>White Paper</a>
+  - <a href='https://github.com/bitmark-inc/bitmark-sdk' target='_blank'>Javascript SDK</a>
+  - <a href='https://github.com/bitmark-inc/bitmark-sdk-go' target='_blank'>Go SDK</a>
+  - <a href='https://github.com/bitmark-inc/bitmark-sdk-swift' target='_blank'>Swift SDK</a>
+  - <a href='https://github.com/bitmark-inc/bitmark-sdk-java' target='_blank'>Java & Android SDK</a>
+  - <a href='https://github.com/lord/slate' target='_blank'>Documentation Powered by Slate</a>
 
 includes:
   # - errors
