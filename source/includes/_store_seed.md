@@ -6,8 +6,15 @@ Store key in mobile application is very important to ensure the security, protec
 
 ```java
 // Storing your account
-Account account = new Account();
-account.saveToKeyStore(activity/* the activity that is instance of StatefulActivity*/, alias /* the account alias, avoid it with default account number*/, isAuthenticationRequired/* need to authenticate each time using key*/, new Callback0() {
+final Account account = new Account();
+final KeyAuthenticationSpec spec = new KeyAuthenticationSpec.Builder(getApplicationContext()).setKeyAlias(ENCRYPTION_KEY_ALIAS) // The encryption key alias for encrypting your key
+                                                 .setAuthenticationRequired(authentication) // true mean the key need to authenticate before using
+                                                 .setAuthenticationValidityDuration(100) //  Time for keeping the key is authenticated
+                                                 .setAuthenticationTitle("Title")
+                                                 .setAuthenticationDescription("Description")
+                                                 .build();
+
+account.saveToKeyStore(activity/* the activity that is instance of StatefulActivity*/, alias /* the account alias, avoid it with default account number*/, spec, new Callback0() {
                 @Override
                 public void onSuccess() {
                     
@@ -20,7 +27,9 @@ account.saveToKeyStore(activity/* the activity that is instance of StatefulActiv
             });
 
 // Getting your account
-Account.loadFromKeyStore(activity, alias /*Simplify with your account number*/, new Callback1<Account>() {
+final KeyAuthenticationSpec spec = new KeyAuthenticationSpec.Builder(getApplicationContext())
+                                        .setKeyAlias(ENCRYPTION_KEY_ALIAS).build();
+Account.loadFromKeyStore(activity, alias, spec, new Callback1<Account>() {
                 @Override
                 public void onSuccess(Account account) {
                     
@@ -33,7 +42,10 @@ Account.loadFromKeyStore(activity, alias /*Simplify with your account number*/, 
             });
 
 // Deleting your account
-account.removeFromKeyStore(activity, new Callback0() {
+final KeyAuthenticationSpec spec = new KeyAuthenticationSpec.Builder(getApplicationContext())
+                                        .setKeyAlias(ENCRYPTION_KEY_ALIAS)
+                                        .build();
+account.removeFromKeyStore(activity, spec, new Callback0() {
                 @Override
                 public void onSuccess() {
                     
@@ -47,9 +59,9 @@ account.removeFromKeyStore(activity, new Callback0() {
 
 ```
 
-Bitmark Android SDK supports storing key from Android **API 21(L)**. However, we recommend you for using store seed utility from Android **API 23(M) and above** because of the security level. Of course, you can use with prior M as well. 
+Bitmark Android SDK supports storing key from Android **API 23(M)** and above because of the security level.
 
-Bitmark Android SDK always authenticate user **each time** they make a key using requesting, so protects user against attackers. We use Android Key Store system with a lot of security algorithm for protecting user's key. 
+Bitmark Android SDK will authenticate user **each time** they use the key (depend on your `KeyAuthenticationSpec`), so protects user against attackers. We use Android Key Store system with a lot of security algorithm for protecting user's key. 
 
 **NOTE**: 
 
