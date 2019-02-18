@@ -52,6 +52,7 @@ pod 'BitmarkSDK'
 // From your build.gradle
 repositories {
     jcenter()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' } // For snapshot version
 }
 
 dependencies {
