@@ -23,11 +23,11 @@ These are terms will be used to describe the flow:
 5. Bitmark SDK
 6. SDK key generator: A CLI to generate client certificate and client public key. Use client public key submits to *Bitmark Inc.* to register a client id.
 
-### How to use
-1. Downloads [CLI app](https://github.com/bitmark-inc/sdk-key-generator), then run to generate a RSA 2048 byte length keypair. The keypair will be serialized in PKCS1 format. Private key will be saved as pem file. Public key will be encoded with base64 standard format and print out to the console.
+### Usage
+1. Download [CLI app](https://github.com/bitmark-inc/sdk-key-generator), then run to generate a RSA 2048 byte length keypair. The keypair will be serialized in PKCS1 format. Private key will be saved as pem file. Public key will be encoded with base64 standard format and print out to the console.
 2. Copy that public key, and send to *Bitmark Inc.* to register a client id. Client ID is computed by hashing with MD5, then encoded with base64 standard format.
-3. Saves the Client certificate pem file in a safe place on their server side.
-4. Generates Bitmark SDK from their server side. The sample code for doing that is provided in [the CLI app](https://github.com/bitmark-inc/sdk-key-generator/blob/develop/main.go#L47).
+3. Save the Client certificate pem file in a safe place on their server side.
+4. Generate Bitmark SDK from their server side. The sample code for doing that is provided in [the CLI app](https://github.com/bitmark-inc/sdk-key-generator/blob/develop/main.go#L47).
 5. On mobile app, it needs to get Bitmark SDK token from server side, fills it to Bitmark SDK and use.
 
 ### How it works
