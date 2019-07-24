@@ -550,3 +550,98 @@ func cancelOfferExample(receiver account.Account) {
 
 If the receiver hasn't responded to the bitmark transfer offer (neither accepted nor rejected), the sender can cancel the offer.
 Similar to the case of the receiver rejectting the offer, the status of the bitmark will be set to `settled` again, and becomes available for the next transfer.
+
+
+# Shares for a property
+
+## Create shares from a bitmark
+
+For some cases, you might expect to have shares for a property. You can turn a bitmark into shares by the share requests. Be careful, this action can not be reverted.
+
+```go
+import (
+    "github.com/bitmark-inc/bitmark-sdk-go/account"
+    "github.com/bitmark-inc/bitmark-sdk-go/share"
+)
+
+func createSharesForBitmark(bitmarkId string, creator account.Account) {
+    params := share.NewShareParams(10000) // set the quantity of shares
+    params.FromBitmark(bitmarkId) // set the source bitmark
+    params.Sign(creator)
+
+    txId, err := share.Create(params)
+}
+```
+
+
+## Grant shares to other account
+
+After you create shares, you can grant them to other bitmark accounts.
+
+```go
+import (
+    "github.com/bitmark-inc/bitmark-sdk-go/account"
+    "github.com/bitmark-inc/bitmark-sdk-go/share"
+)
+
+func grantSharesToAccount(shareId string, sender account.Account, receiver string, beforeBlock int) {
+    params := share.NewShareGrantingParams(shareId, receiver, 100)
+    params.BeforeBlock(beforeBlock)
+    params.Sign(sender)
+    share.Offer(params)
+}
+```
+
+## Accept a share granting offer
+
+You accept shares which are granting to you.
+
+```go
+import (
+    "github.com/bitmark-inc/bitmark-sdk-go/account"
+    "github.com/bitmark-inc/bitmark-sdk-go/share"
+)
+
+// This sample assumes the SDK is already correctly initialized
+func acceptGrantingExample(grantingId string, receiver account.Account) {
+    params := share.NewGrantingResponseParams(grantingId, sdk.Share.Accept)
+    params.Sign(receiver)
+    txId, err := share.Respond(params)
+}
+```
+
+
+## Reject a share granting offer
+
+You reject shares which are granting to you.
+
+```go
+import (
+    "github.com/bitmark-inc/bitmark-sdk-go/account"
+    "github.com/bitmark-inc/bitmark-sdk-go/share"
+)
+
+// This sample assumes the SDK is already correctly initialized
+func rejectGrantingExample(grantingId string, receiver account.Account) {
+    params := share.NewGrantingResponseParams(grantingId, sdk.Share.Reject)
+    params.Sign(receiver)
+    txId, err := share.Respond(params)
+}
+```
+
+## Get share balances
+
+You can get share balances by share id.
+
+```go
+import (
+    "github.com/bitmark-inc/bitmark-sdk-go/account"
+    "github.com/bitmark-inc/bitmark-sdk-go/share"
+)
+
+func getShareBalance(shareId string) {
+    share.Get(shareId)
+    shares, err := share.Get(params)
+}
+```
+
